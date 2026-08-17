@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Karchee — Student Daily Expense Tracker & Fee Alarm</title>
+  <meta name="description" content="Daily Karchee: All-in-one student daily expense tracker for travel costs, gym diet vs normal food, examination fees, and college fee late-submission alarms.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="brand-logo">
+          <div class="logo-icon">🎓</div>
+          <div class="brand-info">
+            <h1>Daily Karchee</h1>
+            <span class="brand-tagline">Student Expense & Fee Manager</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div class="live-date-pill" id="liveDateDisplay">
+          <span class="clock-icon">🕒</span>
+          <span id="currentDateStr">Mon, Aug 17, 2026</span>
+          <span class="live-time" id="currentTimeStr">08:55 PM</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Currency Switcher -->
+        <div class="header-control">
+          <label for="currencySelect" class="sr-only">Currency</label>
+          <select id="currencySelect" class="select-pill" title="Select Currency">
+            <option value="INR" selected>₹ INR</option>
+            <option value="USD">$ USD</option>
+            <option value="EUR">€ EUR</option>
+            <option value="GBP">£ GBP</option>
+            <option value="CAD">$ CAD</option>
+            <option value="AUD">$ AUD</option>
+            <option value="AED">AED</option>
+          </select>
+        </div>
+
+        <!-- Budget Quick Action -->
+        <button id="btnSetBudget" class="btn btn-secondary btn-sm" title="Configure Monthly Allowance">
+          <span class="icon">🎯</span>
+          <span class="btn-text">Budget</span>
+        </button>
+
+        <!-- Test Alarm Sound Button -->
+        <button id="btnTestAlarm" class="btn btn-secondary btn-sm" title="Test College Fee Alarm Sound">
+          <span class="icon">🔔</span>
+          <span class="btn-text">Test Alarm</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="btnThemeToggle" class="icon-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+          <span id="themeIcon">☀️</span>
+        </button>
+
+        <!-- Primary Add Expense Button -->
+        <button id="btnOpenAddModal" class="btn btn-primary">
+          <span class="icon">➕</span>
+          <span>Add Expense</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Urgent Fee Alert Banner (Dynamically shown if fee due within 7 days or overdue) -->
+    <div id="urgentFeeBanner" class="fee-alert-banner hidden">
+      <div class="alert-content">
+        <div class="alert-bell-pulse">⏰</div>
+        <div class="alert-text">
+          <strong id="urgentFeeTitle">College Fee Reminder!</strong>
+          <span id="urgentFeeDetail">Semester Tuition Fee is due in 3 days. Late fine applies after deadline!</span>
+        </div>
+      </div>
+      <div class="alert-actions">
+        <button id="btnSnoozeBanner" class="btn btn-sm btn-outline">Snooze (1h)</button>
+        <button id="btnViewFeeTab" class="btn btn-sm btn-alert-action">View & Pay</button>
+      </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="main-nav">
+      <button class="nav-tab active" data-tab="dashboard">
+        <span class="tab-icon">📊</span>
+        <span class="tab-label">Dashboard</span>
+      </button>
+      <button class="nav-tab" data-tab="travel">
+        <span class="tab-icon">🚌</span>
+        <span class="tab-label">Travel Expenses</span>
+        <span class="tab-badge" id="badgeTravelToday">₹0</span>
+      </button>
+      <button class="nav-tab" data-tab="food">
+        <span class="tab-icon">🥗</span>
+        <span class="tab-label">Food & Gym Diet</span>
+        <span class="tab-badge diet-badge" id="badgeDietSplit">Diet vs Food</span>
+      </button>
+      <button class="nav-tab" data-tab="exams">
+        <span class="tab-icon">📝</span>
+        <span class="tab-label">Exam Fees</span>
+        <span class="tab-badge exam-badge" id="badgeExamPending">0 Due</span>
+      </button>
+      <button class="nav-tab" data-tab="college-fees">
+        <span class="tab-icon">⏰</span>
+        <span class="tab-label">College Fee Alarms</span>
+        <span class="tab-badge alarm-badge" id="badgeFeeAlarm">Active</span>
+      </button>
+      <button class="nav-tab" data-tab="history">
+        <span class="tab-icon">📋</span>
+        <span class="tab-label">All Logs & Export</span>
+      </button>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="content-area">
+      
+      <!-- ============================================== -->
+      <!-- TAB 1: DASHBOARD OVERVIEW -->
+      <!-- ============================================== -->
+      <section id="tab-dashboard" class="tab-content active">
+        <!-- Quick Summary Cards Grid -->
+        <div class="metrics-grid">
+          <!-- Card 1: Today's Total Spend -->
+          <div class="metric-card metric-today">
+            <div class="metric-header">
+              <span class="metric-title">Today's Expenses</span>
+              <span class="metric-icon">📅</span>
+            </div>
+            <div class="metric-value currency-val" id="metricTodaySpend">₹0</div>
+            <div class="metric-footer" id="metricTodayStatus">
+              <span class="status-indicator good">●</span>
+              <span id="metricDailyBudgetStatus">Within daily safe limit (₹250/day)</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Daily Travel Total -->
+          <div class="metric-card metric-travel">
+            <div class="metric-header">
+              <span class="metric-title">Today's Travel</span>
+              <span class="metric-icon">🚌</span>
+            </div>
+            <div class="metric-value currency-val" id="metricTravelSpend">₹0</div>
+            <div class="metric-footer">
+              <span class="sub-text" id="metricTravelSummary">Bus, Metro, Cab & Fuel</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Food & Diet Breakdown -->
+          <div class="metric-card metric-food">
+            <div class="metric-header">
+              <span class="metric-title">Food & Gym Diet</span>
+              <span class="metric-icon">🥗</span>
+            </div>
+            <div class="metric-value currency-val" id="metricFoodTotal">₹0</div>
+            <div class="diet-split-progress" title="Gym Diet vs Normal Food Split">
+              <div class="split-bar gym-bar" id="metricGymBar" style="width: 50%;"></div>
+              <div class="split-bar normal-bar" id="metricNormalBar" style="width: 50%;"></div>
+            </div>
+            <div class="metric-footer split-footer">
+              <span class="gym-label">🏋️ Gym: <b id="metricGymSpend">₹0</b></span>
+              <span class="normal-label">🍽️ Food: <b id="metricNormalSpend">₹0</b></span>
+            </div>
+          </div>
+
+          <!-- Card 4: Exam & College Fees Due -->
+          <div class="metric-card metric-fees">
+            <div class="metric-header">
+              <span class="metric-title">Fees & Next Deadline</span>
+              <span class="metric-icon">⏰</span>
+            </div>
+            <div class="metric-value currency-val" id="metricFeesDue">₹0</div>
+            <div class="metric-footer">
+              <span class="fee-urgency-tag" id="metricNextDeadline">Next: Semester 5 Exam</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Monthly Allowance & Balance -->
+          <div class="metric-card metric-allowance">
+            <div class="metric-header">
+              <span class="metric-title">Monthly Pocket Money</span>
+              <span class="metric-icon">💰</span>
+            </div>
+            <div class="metric-value currency-val" id="metricAllowanceRemaining">₹0</div>
+            <div class="allowance-bar-container">
+              <div class="allowance-bar" id="metricAllowanceBar" style="width: 35%;"></div>
+            </div>
+            <div class="metric-footer">
+              <span class="sub-text" id="metricAllowanceSub">₹4,200 spent of ₹12,000 allowance</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Student Quick-Add Presets Bar -->
+        <div class="quick-presets-section">
+          <div class="section-title-sm">
+            <span>⚡ Quick 1-Click Student Presets</span>
+            <small>Instantly log frequent student expenses</small>
+          </div>
+          <div class="preset-chips">
+            <button class="chip-preset" data-preset="bus">
+              <span class="chip-icon">🚌</span>
+              <span class="chip-name">College Bus</span>
+              <span class="chip-cost">₹30</span>
+            </button>
+            <button class="chip-preset" data-preset="metro">
+              <span class="chip-icon">🚇</span>
+              <span class="chip-name">Metro Token</span>
+              <span class="chip-cost">₹40</span>
+            </button>
+            <button class="chip-preset" data-preset="canteen-lunch">
+              <span class="chip-icon">🍛</span>
+              <span class="chip-name">Mess / Canteen Lunch</span>
+              <span class="chip-cost">₹80</span>
+            </button>
+            <button class="chip-preset" data-preset="chai-samosa">
+              <span class="chip-icon">☕</span>
+              <span class="chip-name">Chai & Samosa Break</span>
+              <span class="chip-cost">₹25</span>
+            </button>
+            <button class="chip-preset" data-preset="protein-shake">
+              <span class="chip-icon">🏋️</span>
+              <span class="chip-name">Whey Scoop + 4 Eggs</span>
+              <span class="chip-cost">₹95</span>
+            </button>
+            <button class="chip-preset" data-preset="peanut-butter-oats">
+              <span class="chip-icon">🥣</span>
+              <span class="chip-name">Gym Oats & PB Snack</span>
+              <span class="chip-cost">₹50</span>
+            </button>
+            <button class="chip-preset" data-preset="auto-rickshaw">
+              <span class="chip-icon">🛺</span>
+              <span class="chip-name">Shared Auto</span>
+              <span class="chip-cost">₹20</span>
+            </button>
+            <button class="chip-preset" data-preset="photocopy">
+              <span class="chip-icon">📄</span>
+              <span class="chip-name">Notes Print/Xerox</span>
+              <span class="chip-cost">₹15</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Visual Analytics Grid -->
+        <div class="charts-row">
+          <!-- 7-Day Spending Trend -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h3>📈 7-Day Spending Trend</h3>
+                <p class="chart-subtitle">Daily cost trajectory across student categories</p>
+              </div>
+              <div class="chart-legend" id="barTrendLegend">
+                <span class="dot-legend" style="--c: var(--accent-travel)">Travel</span>
+                <span class="dot-legend" style="--c: var(--accent-gym)">Gym Diet</span>
+                <span class="dot-legend" style="--c: var(--accent-food)">Normal Food</span>
+                <span class="dot-legend" style="--c: var(--accent-exam)">Academic</span>
+              </div>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <svg id="spendingTrendChart" viewBox="0 0 500 220" class="svg-chart"></svg>
+            </div>
+          </div>
+
+          <!-- Category Breakdown & Food Ratio -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h3>🍩 Expense Breakdown</h3>
+                <p class="chart-subtitle">This Month's Spending Share</p>
+              </div>
+              <span class="badge-pill" id="totalMonthSpendBadge">₹0 Total</span>
+            </div>
+            <div class="doughnut-container">
+              <div class="svg-doughnut-wrap">
+                <svg id="categoryDoughnutChart" viewBox="0 0 200 200" class="svg-doughnut"></svg>
+                <div class="doughnut-center-info">
+                  <span class="center-label">Top Category</span>
+                  <strong class="center-val" id="topCategoryName">Food</strong>
+                </div>
+              </div>
+              <div class="doughnut-legend" id="categoryDoughnutLegend">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Transactions & Upcoming Deadlines Mini Grid -->
+        <div class="dashboard-split-grid">
+          <!-- Left: Recent Transactions -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3>🕒 Recent Student Expenses</h3>
+              <button class="btn-link" onclick="app.switchTab('history')">View All →</button>
+            </div>
+            <div class="recent-list" id="dashboardRecentList">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Right: Active Fee Reminders & Alarms -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3>⏰ Fee Deadlines & Alarm Watch</h3>
+              <button class="btn-link" onclick="app.switchTab('college-fees')">Manage Alarms →</button>
+            </div>
+            <div class="fee-watch-list" id="dashboardFeeWatchList">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 2: DAILY TRAVEL EXPENSES -->
+      <!-- ============================================== -->
+      <section id="tab-travel" class="tab-content">
+        <div class="section-intro">
+          <div class="intro-text">
+            <h2>🚌 Daily Travel & Transportation Expenses</h2>
+            <p>Log and track all campus commutes: Public Bus, Metro/Subway, Cab/Auto, Bike/Car Fuel, and Monthly Passes.</p>
+          </div>
+          <button class="btn btn-primary" onclick="app.openAddModalWithCategory('travel')">
+            <span>➕ Log Travel Cost</span>
+          </button>
+        </div>
+
+        <!-- Travel Summary Row -->
+        <div class="travel-summary-row">
+          <div class="sub-metric-card">
+            <span class="sub-metric-icon">🗓️</span>
+            <div>
+              <small>Today's Commute Total</small>
+              <h3 class="currency-val" id="travelTodayTotal">₹0</h3>
+            </div>
+          </div>
+          <div class="sub-metric-card">
+            <span class="sub-metric-icon">📅</span>
+            <div>
+              <small>This Month's Travel</small>
+              <h3 class="currency-val" id="travelMonthTotal">₹0</h3>
+            </div>
+          </div>
+          <div class="sub-metric-card">
+            <span class="sub-metric-icon">📊</span>
+            <div>
+              <small>Avg Daily Commute Cost</small>
+              <h3 class="currency-val" id="travelDailyAvg">₹0/day</h3>
+            </div>
+          </div>
+          <div class="sub-metric-card">
+            <span class="sub-metric-icon">🚇</span>
+            <div>
+              <small>Most Used Mode</small>
+              <h3 id="travelTopMode">Metro Rail</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Travel Mode Filters & Route History -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="filter-bar">
+              <span class="filter-title">Filter by Mode:</span>
+              <button class="pill-filter active" data-travel-filter="all">All Modes</button>
+              <button class="pill-filter" data-travel-filter="bus">🚌 Bus</button>
+              <button class="pill-filter" data-travel-filter="metro">🚇 Metro</button>
+              <button class="pill-filter" data-travel-filter="auto_cab">🛺 Auto / Cab</button>
+              <button class="pill-filter" data-travel-filter="fuel">⛽ Bike / Fuel</button>
+              <button class="pill-filter" data-travel-filter="pass">🎟️ Pass Recharge</button>
+            </div>
+          </div>
+
+          <div class="travel-entries-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Transport Mode</th>
+                  <th>Route / Details</th>
+                  <th>Payment</th>
+                  <th>Amount</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="travelTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 3: FOOD & GYM DIET (DIFFERENTIATION) -->
+      <!-- ============================================== -->
+      <section id="tab-food" class="tab-content">
+        <div class="section-intro">
+          <div class="intro-text">
+            <h2>🥗 Daily Food & Gym Diet Breakdown</h2>
+            <p>Smart distinction between <strong>🏋️‍♂️ Gym & Fitness Nutrition</strong> (Whey, Eggs, Chicken, Oats, Peanut Butter) and <strong>🍽️ Normal College Food</strong> (Mess, Canteen, Chai, Snacks).</p>
+          </div>
+          <div class="action-buttons-group">
+            <button class="btn btn-gym" onclick="app.openAddModalWithCategory('food', 'gym_diet')">
+              <span>🏋️ Log Gym Diet</span>
+            </button>
+            <button class="btn btn-food" onclick="app.openAddModalWithCategory('food', 'normal_food')">
+              <span>🍽️ Log Normal Food</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Comparative Diet vs Normal Food Banner & Metrics -->
+        <div class="diet-comparison-card">
+          <div class="diet-comp-header">
+            <h3>⚖️ Diet Spending Comparison (This Month)</h3>
+            <span class="badge-ratio" id="dietSplitPercentage">Gym: 55% | Normal: 45%</span>
+          </div>
+          <div class="diet-visual-bar-wrap">
+            <div class="diet-bar-fill-gym" id="dietCompareGymBar" style="width: 55%;">
+              <span class="diet-bar-label">🏋️ Gym Diet (<span id="gymDietPercentText">55%</span>)</span>
+            </div>
+            <div class="diet-bar-fill-normal" id="dietCompareNormalBar" style="width: 45%;">
+              <span class="diet-bar-label">🍽️ Normal Food (<span id="normalFoodPercentText">45%</span>)</span>
+            </div>
+          </div>
+          <div class="diet-stats-columns">
+            <div class="diet-stat-col col-gym">
+              <div class="stat-badge">🏋️ Fitness & Gym Diet</div>
+              <div class="diet-money currency-val" id="dietGymTotalSpend">₹0</div>
+              <div class="stat-detail">
+                <span>Total Protein Tracked: <strong id="dietTotalProtein">0g</strong></span>
+                <span>Avg Daily Fitness Cost: <strong id="dietGymDailyAvg">₹0</strong></span>
+              </div>
+            </div>
+            <div class="diet-stat-col col-normal">
+              <div class="stat-badge">🍽️ Regular Food & Campus Canteen</div>
+              <div class="diet-money currency-val" id="dietNormalTotalSpend">₹0</div>
+              <div class="stat-detail">
+                <span>Mess & Canteen Meals: <strong id="dietNormalMealCount">0 meals</strong></span>
+                <span>Avg Daily Food Cost: <strong id="dietNormalDailyAvg">₹0</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Diet View Switcher & Item List -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="tab-toggle-sub">
+              <button class="sub-tab-btn active" data-food-tab="all">All Food & Diet Logs</button>
+              <button class="sub-tab-btn" data-food-tab="gym_diet">🏋️ Gym & Fitness Diet Only</button>
+              <button class="sub-tab-btn" data-food-tab="normal_food">🍽️ Normal College Food Only</button>
+            </div>
+          </div>
+
+          <div class="food-entries-grid" id="foodEntriesGrid">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 4: EXAMINATION FEES EXPENSES -->
+      <!-- ============================================== -->
+      <section id="tab-exams" class="tab-content">
+        <div class="section-intro">
+          <div class="intro-text">
+            <h2>📝 Examination & Academic Fees</h2>
+            <p>Track Semester End Exam forms, Backlog / Arrear registrations, Lab / Practical exam fees, and Re-evaluation costs.</p>
+          </div>
+          <button class="btn btn-exam" onclick="app.openAddModalWithCategory('exam_fees')">
+            <span>➕ Add Exam Fee Entry</span>
+          </button>
+        </div>
+
+        <!-- Exam Fee Summary Stats -->
+        <div class="exam-summary-row">
+          <div class="exam-stat-card">
+            <span class="exam-stat-icon">📑</span>
+            <div>
+              <small>Total Exam Fees (Semester)</small>
+              <h3 class="currency-val" id="examTotalSpend">₹0</h3>
+            </div>
+          </div>
+          <div class="exam-stat-card pending-card">
+            <span class="exam-stat-icon">⏳</span>
+            <div>
+              <small>Pending / Upcoming Exam Fees</small>
+              <h3 class="currency-val" id="examPendingTotal">₹0</h3>
+            </div>
+          </div>
+          <div class="exam-stat-card paid-card">
+            <span class="exam-stat-icon">✅</span>
+            <div>
+              <small>Cleared / Paid Exam Fees</small>
+              <h3 class="currency-val" id="examPaidTotal">₹0</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exam Fee List with Status Badges -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="filter-bar">
+              <span class="filter-title">Status:</span>
+              <button class="pill-filter active" data-exam-filter="all">All</button>
+              <button class="pill-filter" data-exam-filter="pending">⏳ Pending / Due</button>
+              <button class="pill-filter" data-exam-filter="paid">✅ Paid</button>
+            </div>
+          </div>
+
+          <div class="exam-cards-grid" id="examCardsGrid">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 5: COLLEGE FEES & LATE SUBMISSION ALARM -->
+      <!-- ============================================== -->
+      <section id="tab-college-fees" class="tab-content">
+        <div class="section-intro">
+          <div class="intro-text">
+            <h2>⏰ College Fee Submission & Anti-Late Fine Alarm</h2>
+            <p>Never pay late fee penalties again. Configure alarms, sound chimes, due dates, grace periods, and late penalty calculations.</p>
+          </div>
+          <div class="action-buttons-group">
+            <button class="btn btn-secondary" id="btnRequestNotificationPerm">
+              <span>🔔 Enable Browser Alerts</span>
+            </button>
+            <button class="btn btn-danger" onclick="app.openAddFeeModal()">
+              <span>➕ Add College Fee Deadline</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Fee Alarm System Banner -->
+        <div class="alarm-system-card">
+          <div class="alarm-sys-header">
+            <div class="alarm-bell-icon animated-bell">🔔</div>
+            <div>
+              <h3>Active Fee Alarm & Reminder Engine</h3>
+              <p>Real-time countdown timer & Web Audio chime alerts for upcoming semester tuition, hostel, and exam deadlines.</p>
+            </div>
+          </div>
+
+          <div class="alarm-controls-grid">
+            <div class="control-box">
+              <label>🔊 Alarm Sound Type:</label>
+              <select id="alarmSoundType" class="input-control">
+                <option value="chime">Gentle College Bell Chime (Synthesized)</option>
+                <option value="urgent">Urgent Warning Siren (Synthesized)</option>
+                <option value="digital">Digital Clock Alarm (Synthesized)</option>
+                <option value="melody">Melodic Reminder Chime (Synthesized)</option>
+              </select>
+            </div>
+            <div class="control-box">
+              <label>⏳ Reminder Threshold:</label>
+              <select id="alarmReminderDays" class="input-control">
+                <option value="7">Alert 7 days before deadline</option>
+                <option value="3" selected>Alert 3 days before deadline</option>
+                <option value="1">Alert 1 day before deadline</option>
+                <option value="0">Alert on due date only</option>
+              </select>
+            </div>
+            <div class="control-box flex-end">
+              <button id="btnTestCurrentSound" class="btn btn-outline full-width">
+                <span>▶️ Test Synthesizer Sound</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- College Fees Watchlist & Late Penalty Calculator -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>📋 Scheduled College Dues & Penalty Projections</h3>
+            <span class="badge-pill" id="totalActiveFeesCount">3 Active Dues</span>
+          </div>
+
+          <div class="college-fees-grid" id="collegeFeesGrid">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 6: ALL LOGS, FILTERING & EXPORT -->
+      <!-- ============================================== -->
+      <section id="tab-history" class="tab-content">
+        <div class="section-intro">
+          <div class="intro-text">
+            <h2>📋 Transaction History & Statement Export</h2>
+            <p>Search, filter, edit, and export your student spending records to CSV, JSON, or print-ready format.</p>
+          </div>
+          <div class="action-buttons-group">
+            <button class="btn btn-secondary" id="btnExportCSV">
+              <span>📥 Export CSV</span>
+            </button>
+            <button class="btn btn-secondary" id="btnExportJSON">
+              <span>💾 Backup JSON</span>
+            </button>
+            <button class="btn btn-secondary" id="btnImportJSONTrigger">
+              <span>📂 Restore JSON</span>
+            </button>
+            <input type="file" id="fileInputJSON" accept=".json" style="display:none;">
+            <button class="btn btn-secondary" id="btnPrintStatement">
+              <span>🖨️ Print Statement</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter and Search Bar -->
+        <div class="panel-card filter-panel">
+          <div class="search-filter-grid">
+            <div class="search-field">
+              <label for="searchQuery">Search Description / Notes:</label>
+              <input type="text" id="searchQuery" class="input-control" placeholder="Search e.g. Metro, Whey, Canteen, Physics exam...">
+            </div>
+            <div class="filter-field">
+              <label for="filterCategory">Category:</label>
+              <select id="filterCategory" class="input-control">
+                <option value="all">All Categories</option>
+                <option value="travel">🚌 Travel & Transport</option>
+                <option value="gym_diet">🏋️ Gym & Fitness Diet</option>
+                <option value="normal_food">🍽️ Normal Food & Canteen</option>
+                <option value="exam_fees">📝 Examination Fees</option>
+                <option value="college_fees">🏫 College Tuition & Hostel</option>
+                <option value="study_materials">📚 Books & Study Supplies</option>
+                <option value="other">💡 Miscellaneous / Other</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="filterDateRange">Date Range:</label>
+              <select id="filterDateRange" class="input-control">
+                <option value="all">All Time</option>
+                <option value="today">Today</option>
+                <option value="week">Last 7 Days</option>
+                <option value="month" selected>This Month</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="sortBy">Sort By:</label>
+              <select id="sortBy" class="input-control">
+                <option value="date-desc">Newest First</option>
+                <option value="date-asc">Oldest First</option>
+                <option value="amount-desc">Highest Amount</option>
+                <option value="amount-asc">Lowest Amount</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- All Transactions Table -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <div class="results-summary">
+              <span>Showing <strong id="filteredCount">0</strong> transactions</span>
+              <span>Total: <strong class="currency-val" id="filteredTotal">₹0</strong></span>
+            </div>
+          </div>
+          <div class="travel-entries-table-wrapper">
+            <table class="data-table" id="allTransactionsTable">
+              <thead>
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Category</th>
+                  <th>Item / Description</th>
+                  <th>Special Tags / Route</th>
+                  <th>Payment</th>
+                  <th>Amount</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="allTransactionsTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar for Mobile -->
+    <nav class="mobile-bottom-nav">
+      <button class="m-tab active" data-tab="dashboard">
+        <span class="m-icon">📊</span>
+        <span>Home</span>
+      </button>
+      <button class="m-tab" data-tab="travel">
+        <span class="m-icon">🚌</span>
+        <span>Travel</span>
+      </button>
+      <button class="m-tab" data-tab="food">
+        <span class="m-icon">🥗</span>
+        <span>Diet/Food</span>
+      </button>
+      <button class="m-tab" data-tab="exams">
+        <span class="m-icon">📝</span>
+        <span>Exams</span>
+      </button>
+      <button class="m-tab" data-tab="college-fees">
+        <span class="m-icon">⏰</span>
+        <span>Alarms</span>
+      </button>
+      <button class="m-tab" data-tab="history">
+        <span class="m-icon">📋</span>
+        <span>Logs</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: ADD / EDIT EXPENSE -->
+  <!-- ============================================== -->
+  <div id="expenseModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="expenseModalTitle">➕ Log Student Expense</h3>
+        <button class="modal-close" onclick="app.closeExpenseModal()">&times;</button>
+      </div>
+      <form id="expenseForm" onsubmit="app.handleSaveExpense(event)">
+        <input type="hidden" id="editExpenseId">
+        
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <label for="expCategory">Category *</label>
+            <select id="expCategory" class="input-control" required onchange="app.handleCategoryChange()">
+              <option value="travel">🚌 Travel / Transportation</option>
+              <option value="food">🥗 Food & Diet</option>
+              <option value="exam_fees">📝 Examination & Academic Fees</option>
+              <option value="college_fees">🏫 College Dues / Tuition</option>
+              <option value="study_materials">📚 Study Notes & Books</option>
+              <option value="other">💡 Miscellaneous / Other</option>
+            </select>
+          </div>
+
+          <div class="form-group flex-1" id="foodTypeGroup" style="display:none;">
+            <label for="foodType">Food Sub-Type *</label>
+            <select id="foodType" class="input-control">
+              <option value="gym_diet">🏋️ Gym / Fitness Diet</option>
+              <option value="normal_food" selected>🍽️ Normal Food / Canteen</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <label for="expTitle">Description / Item Name *</label>
+            <input type="text" id="expTitle" class="input-control" placeholder="e.g. Metro to College, Whey Protein, Canteen Thali" required>
+          </div>
+          <div class="form-group flex-1">
+            <label for="expAmount">Amount *</label>
+            <div class="input-with-symbol">
+              <span class="currency-symbol" id="formCurrencySymbol">₹</span>
+              <input type="number" step="any" min="0" id="expAmount" class="input-control" placeholder="0.00" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Category Specific Fields -->
+        <!-- Travel Specific -->
+        <div id="travelSpecificFields" class="category-extra-box" style="display:none;">
+          <div class="extra-title">🚌 Travel Commute Details</div>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="travelMode">Transport Mode</label>
+              <select id="travelMode" class="input-control">
+                <option value="bus">🚌 Public / College Bus</option>
+                <option value="metro">🚇 Metro / Subway</option>
+                <option value="auto_cab">🛺 Shared Auto / Cab / Uber</option>
+                <option value="fuel">⛽ Bike / Car Fuel</option>
+                <option value="pass">🎟️ Monthly Pass Recharge</option>
+                <option value="train">🚆 Local Train</option>
+              </select>
+            </div>
+            <div class="form-group flex-2">
+              <label for="travelRoute">Route / Destination</label>
+              <input type="text" id="travelRoute" class="input-control" placeholder="e.g. Hostel to Engineering Block">
+            </div>
+          </div>
+        </div>
+
+        <!-- Gym Diet Specific -->
+        <div id="gymSpecificFields" class="category-extra-box" style="display:none;">
+          <div class="extra-title">🏋️ Fitness & Gym Diet Macros</div>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="gymDietItemType">Diet Item Type</label>
+              <select id="gymDietItemType" class="input-control">
+                <option value="whey">Whey Protein Shake</option>
+                <option value="eggs">Boiled Eggs / Omelette</option>
+                <option value="chicken_tofu">Chicken / Tofu / Paneer</option>
+                <option value="oats_pb">Oats & Peanut Butter</option>
+                <option value="creatine">Creatine / Pre-Workout</option>
+                <option value="fruits_nuts">Fruits / Dry Fruits</option>
+                <option value="other_diet">Other High Protein Snack</option>
+              </select>
+            </div>
+            <div class="form-group flex-1">
+              <label for="gymProteinGrams">Est. Protein (Grams)</label>
+              <input type="number" id="gymProteinGrams" class="input-control" placeholder="e.g. 24g" min="0">
+            </div>
+            <div class="form-group flex-1">
+              <label for="gymMealTiming">Timing</label>
+              <select id="gymMealTiming" class="input-control">
+                <option value="post_workout">Post-Workout</option>
+                <option value="pre_workout">Pre-Workout</option>
+                <option value="morning_breakfast">Breakfast</option>
+                <option value="snack">High-Protein Snack</option>
+                <option value="dinner">Dinner</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exam Fees Specific -->
+        <div id="examSpecificFields" class="category-extra-box" style="display:none;">
+          <div class="extra-title">📝 Exam Fee Details</div>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="examType">Exam Category</label>
+              <select id="examType" class="input-control">
+                <option value="semester_regular">Semester Regular Exams</option>
+                <option value="backlog_arrear">Backlog / Arrear Paper Fee</option>
+                <option value="practical_lab">Practical & Lab Exam Fee</option>
+                <option value="certification">External Certification / NPTEL</option>
+                <option value="re_evaluation">Re-evaluation / Re-check Fee</option>
+                <option value="hall_ticket">Hall Ticket / Late Registration</option>
+              </select>
+            </div>
+            <div class="form-group flex-1">
+              <label for="examSemester">Semester / Year</label>
+              <input type="text" id="examSemester" class="input-control" placeholder="e.g. Sem 5 / Year 3">
+            </div>
+            <div class="form-group flex-1">
+              <label for="examStatus">Fee Status</label>
+              <select id="examStatus" class="input-control">
+                <option value="paid">✅ Paid</option>
+                <option value="pending">⏳ Pending / Due</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="expDate">Date *</label>
+            <input type="date" id="expDate" class="input-control" required>
+          </div>
+          <div class="form-group flex-1">
+            <label for="expTime">Time</label>
+            <input type="time" id="expTime" class="input-control">
+          </div>
+          <div class="form-group flex-1">
+            <label for="expPaymentMethod">Payment Mode</label>
+            <select id="expPaymentMethod" class="input-control">
+              <option value="UPI">📱 UPI / QR Code</option>
+              <option value="Cash">💵 Cash</option>
+              <option value="Card">💳 Debit / Credit Card</option>
+              <option value="NetBanking">💻 Net Banking</option>
+              <option value="Pass">🎟️ Transit Card / Pass</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="expNotes">Notes / Receipt Reference (Optional)</label>
+          <input type="text" id="expNotes" class="input-control" placeholder="e.g. UPI ref #123849, shared with roommate, etc.">
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="app.closeExpenseModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveExpense">Save Expense</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: ADD COLLEGE FEE DEADLINE & ALARM -->
+  <!-- ============================================== -->
+  <div id="feeModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="feeModalTitle">⏰ Add College Fee Deadline & Alarm</h3>
+        <button class="modal-close" onclick="app.closeFeeModal()">&times;</button>
+      </div>
+      <form id="feeForm" onsubmit="app.handleSaveFee(event)">
+        <input type="hidden" id="editFeeId">
+
+        <div class="form-group">
+          <label for="feeTitle">Fee Title / Purpose *</label>
+          <input type="text" id="feeTitle" class="input-control" placeholder="e.g. Semester 6 Tuition Fee, Hostel Mess Advance, Annual Library Dues" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="feeAmount">Fee Amount *</label>
+            <div class="input-with-symbol">
+              <span class="currency-symbol" id="feeFormCurrencySymbol">₹</span>
+              <input type="number" step="any" min="0" id="feeAmount" class="input-control" placeholder="45000" required>
+            </div>
+          </div>
+          <div class="form-group flex-1">
+            <label for="feeDueDate">Due Date *</label>
+            <input type="date" id="feeDueDate" class="input-control" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="feeGracePeriod">Grace Period (Days)</label>
+            <input type="number" min="0" id="feeGracePeriod" class="input-control" value="0" placeholder="0">
+          </div>
+          <div class="form-group flex-1">
+            <label for="feeLatePenalty">Late Penalty Per Day</label>
+            <div class="input-with-symbol">
+              <span class="currency-symbol" id="penaltyFormCurrencySymbol">₹</span>
+              <input type="number" min="0" id="feeLatePenalty" class="input-control" value="100" placeholder="100">
+            </div>
+          </div>
+        </div>
+
+        <div class="category-extra-box">
+          <div class="extra-title">🔔 Alarm & Notification Configuration</div>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="feeAlarmSound">Alarm Sound</label>
+              <select id="feeAlarmSound" class="input-control">
+                <option value="chime">College Bell Chime</option>
+                <option value="urgent">Urgent Warning Siren</option>
+                <option value="digital">Digital Clock Beep</option>
+                <option value="melody">Melodic Tune</option>
+              </select>
+            </div>
+            <div class="form-group flex-1">
+              <label for="feeStatusSelect">Status</label>
+              <select id="feeStatusSelect" class="input-control">
+                <option value="pending" selected>⏳ Pending Submission</option>
+                <option value="paid">✅ Paid & Cleared</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="app.closeFeeModal()">Cancel</button>
+          <button type="submit" class="btn btn-danger">Save Fee Deadline & Alarm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: SET BUDGET & ALLOWANCE -->
+  <!-- ============================================== -->
+  <div id="budgetModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🎯 Student Monthly Allowance & Daily Budget</h3>
+        <button class="modal-close" onclick="app.closeBudgetModal()">&times;</button>
+      </div>
+      <form id="budgetForm" onsubmit="app.handleSaveBudget(event)">
+        <div class="form-group">
+          <label for="monthlyAllowanceInput">Monthly Pocket Money / Allowance</label>
+          <div class="input-with-symbol">
+            <span class="currency-symbol" id="budgetCurrencySymbol">₹</span>
+            <input type="number" min="0" id="monthlyAllowanceInput" class="input-control" value="12000" required>
+          </div>
+          <small class="help-text">Money received from parents or part-time student work.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="dailyBudgetLimitInput">Daily Safe Spending Target</label>
+          <div class="input-with-symbol">
+            <span class="currency-symbol" id="dailyBudgetCurrencySymbol">₹</span>
+            <input type="number" min="0" id="dailyBudgetLimitInput" class="input-control" value="350" required>
+          </div>
+          <small class="help-text">You'll receive a warning tag if today's expense exceeds this amount.</small>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="app.closeBudgetModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Budget</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: ACTIVE ALARM TRIGGER POPUP -->
+  <!-- ============================================== -->
+  <div id="alarmTriggerModal" class="modal-backdrop hidden alarm-active-modal">
+    <div class="modal-card alarm-card-pulse">
+      <div class="alarm-modal-body">
+        <div class="alarm-huge-icon">⏰🔔</div>
+        <h2 id="alarmTriggerTitle">College Fee Due Alarm!</h2>
+        <p id="alarmTriggerSubtitle">Your <strong>Semester 6 Tuition Fee</strong> is due in 2 days!</p>
+        
+        <div class="alarm-due-details-box">
+          <div class="alarm-detail-item">
+            <span>Fee Amount:</span>
+            <strong class="currency-val" id="alarmTriggerAmount">₹45,000</strong>
+          </div>
+          <div class="alarm-detail-item">
+            <span>Due Date:</span>
+            <strong id="alarmTriggerDueDate">Aug 20, 2026</strong>
+          </div>
+          <div class="alarm-detail-item">
+            <span>Late Fee If Missed:</span>
+            <strong class="text-danger" id="alarmTriggerPenalty">₹100 / day penalty</strong>
+          </div>
+        </div>
+
+        <div class="alarm-modal-actions">
+          <button class="btn btn-secondary" onclick="app.snoozeActiveAlarm()">⏳ Snooze Alarm (30 Mins)</button>
+          <button class="btn btn-success" onclick="app.markActiveFeeAsPaid()">✅ Mark as Paid</button>
+          <button class="btn btn-primary" onclick="app.dismissActiveAlarm()">Dismiss Alarm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
