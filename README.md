@@ -16,12 +16,8 @@ A simple web application for managing and tracking daily expenses.
 - JavaScript
 
 ## 🌐 Live Demo
+jatin0109.github.io/daily-karchee/
 
-Add your Vercel website link here.
-
-## 📸 Screenshots
-
-Add screenshots of your website here.
 
 ## 🔮 Future Improvements
 
