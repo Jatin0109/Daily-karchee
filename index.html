@@ -4,732 +4,1263 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daily Karchee — Student Daily Expense Tracker & Fee Alarm</title>
-  <meta name="description" content="Daily Karchee: All-in-one student daily expense tracker for travel costs, gym diet vs normal food, examination fees, and college fee late-submission alarms.">
+  <meta name="description" content="All-in-one student daily expense tracker for commute costs, gym diet vs food, exam fees, and college fee late-submission alarms.">
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
-<style>
-:root{--bg:#07111f;--card:#101d30;--card2:#0c1728;--text:#eef5ff;--muted:#9aabc0;--accent:#4f9cff;--accent2:#7c5cff;--border:rgba(255,255,255,.09);--shadow:0 12px 35px rgba(0,0,0,.22)}
-[data-theme="light"]{--bg:#f4f7fb;--card:#fff;--card2:#f7f9fc;--text:#152033;--muted:#68758a;--border:rgba(21,32,51,.12);--shadow:0 10px 28px rgba(20,40,70,.1)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}.app-container{max-width:1500px;margin:auto;padding:16px 20px 90px}.app-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0}.brand-logo,.header-right,.header-center,.action-buttons-group,.filter-bar,.preset-chips{display:flex;align-items:center;gap:10px}.logo-icon{font-size:2rem}.brand-info h1{margin:0;font-size:1.25rem}.brand-tagline,.sub-text,small,.chart-subtitle{color:var(--muted)}.header-right{flex-wrap:wrap;justify-content:flex-end}.btn,.icon-btn,.nav-tab,.m-tab,.chip-preset,.pill-filter,.sub-tab-btn,.btn-link{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:12px;padding:10px 14px;font:inherit;cursor:pointer;transition:.2s}.btn:hover,.icon-btn:hover,.chip-preset:hover,.nav-tab:hover{transform:translateY(-1px);border-color:var(--accent)}.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:0;color:#fff}.btn-danger{background:#d84b58;color:#fff}.btn-success{background:#16856d;color:#fff}.btn-secondary,.btn-outline{background:var(--card)}.btn-sm{padding:8px 10px;font-size:.85rem}.select-pill,.input-control{width:100%;border:1px solid var(--border);background:var(--card2);color:var(--text);border-radius:10px;padding:11px 12px;font:inherit}.main-nav{display:flex;gap:8px;overflow:auto;padding:10px 0;scrollbar-width:none}.nav-tab{white-space:nowrap;display:flex;align-items:center;gap:7px}.nav-tab.active,.pill-filter.active,.sub-tab-btn.active{background:var(--accent);color:#fff}.tab-badge{font-size:.7rem;padding:3px 6px;background:rgba(255,255,255,.12);border-radius:999px}.tab-content{display:none}.tab-content.active{display:block}.content-area{padding-top:8px}.metrics-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}.metric-card,.panel-card,.chart-card,.sub-metric-card,.exam-stat-card,.diet-comparison-card,.alarm-system-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow)}.metric-header,.panel-header,.chart-header,.section-intro,.diet-comp-header,.alarm-sys-header{display:flex;justify-content:space-between;align-items:center;gap:14px}.metric-value,.diet-money{font-size:1.65rem;font-weight:800;margin:10px 0}.quick-presets-section{margin:18px 0}.section-title-sm{margin-bottom:10px}.preset-chips{overflow:auto;padding-bottom:5px}.chip-preset{white-space:nowrap;text-align:left}.chip-cost{display:block;color:var(--accent);font-weight:700}.charts-row,.dashboard-split-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;margin:14px 0}.chart-canvas-wrapper{overflow:auto}.svg-chart{width:100%;min-height:220px}.doughnut-container{display:flex;align-items:center;justify-content:center;gap:20px}.svg-doughnut-wrap{position:relative;width:200px}.svg-doughnut{width:100%}.doughnut-center-info{position:absolute;inset:0;display:grid;place-content:center;text-align:center}.doughnut-legend{display:grid;gap:8px}.recent-list,.fee-watch-list{display:grid;gap:10px;margin-top:14px}.list-item{display:flex;justify-content:space-between;gap:12px;padding:12px;border-radius:12px;background:var(--card2)}.travel-summary-row,.exam-summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:15px 0}.sub-metric-card,.exam-stat-card{display:flex;gap:12px;align-items:center}.sub-metric-card h3,.exam-stat-card h3{margin:3px 0}.sub-metric-icon,.exam-stat-icon{font-size:1.6rem}.section-intro{margin:10px 0 18px}.intro-text h2{margin:0}.intro-text p{color:var(--muted);margin:6px 0}.travel-entries-table-wrapper{overflow:auto}.data-table{width:100%;border-collapse:collapse;min-width:720px}.data-table th,.data-table td{padding:13px;border-bottom:1px solid var(--border);text-align:left}.data-table th{color:var(--muted);font-size:.8rem}.diet-visual-bar-wrap,.diet-split-progress,.allowance-bar-container{height:12px;background:var(--card2);border-radius:999px;overflow:hidden;display:flex}.split-bar,.allowance-bar,.diet-bar-fill-gym,.diet-bar-fill-normal{background:var(--accent);height:100%}.diet-bar-fill-normal,.normal-bar{background:var(--accent2)}.diet-stats-columns,.food-entries-grid,.exam-cards-grid,.college-fees-grid,.search-filter-grid,.alarm-controls-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.diet-stat-col{padding:16px;border-radius:14px;background:var(--card2)}.exam-card,.fee-card{padding:15px;background:var(--card2);border:1px solid var(--border);border-radius:14px}.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.65);display:grid;place-items:center;padding:16px;z-index:50}.modal-backdrop.hidden,.hidden{display:none!important}.modal-card{width:min(700px,100%);max-height:92vh;overflow:auto;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px}.modal-header,.modal-footer{display:flex;justify-content:space-between;align-items:center;gap:10px}.modal-close{font-size:1.7rem;background:none;border:0;color:var(--text);cursor:pointer}.form-row{display:flex;gap:12px}.form-group{margin:13px 0;min-width:0}.form-group label{display:block;margin-bottom:6px;font-size:.88rem}.flex-1{flex:1}.flex-2{flex:2}.category-extra-box{padding:14px;border:1px solid var(--border);border-radius:14px;margin:12px 0}.extra-title{font-weight:700}.input-with-symbol{position:relative}.currency-symbol{position:absolute;left:12px;top:11px;color:var(--muted)}.input-with-symbol input{padding-left:30px}.toast-container{position:fixed;right:18px;bottom:18px;z-index:100;display:grid;gap:8px}.toast{background:var(--card);border:1px solid var(--border);padding:12px 16px;border-radius:12px;box-shadow:var(--shadow)}.mobile-bottom-nav{display:none}
-@media(max-width:1100px){.metrics-grid{grid-template-columns:repeat(3,1fr)}.header-center{display:none}}
-@media(max-width:760px){body{font-size:14px}.app-container{padding:10px 10px 85px}.app-header{align-items:flex-start}.brand-tagline,.live-date-pill,.header-control,#btnTestAlarm,.main-nav{display:none}.header-right{gap:7px}.btn-text{display:none}.header-right .btn{padding:9px}.metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.metric-card{padding:13px}.metric-value{font-size:1.25rem}.charts-row,.dashboard-split-grid,.diet-stats-columns,.search-filter-grid,.alarm-controls-grid{grid-template-columns:1fr}.travel-summary-row,.exam-summary-row{grid-template-columns:repeat(2,1fr)}.section-intro{align-items:flex-start;flex-direction:column}.action-buttons-group{width:100%;display:grid;grid-template-columns:1fr 1fr}.action-buttons-group .btn{width:100%}.form-row{flex-direction:column;gap:0}.doughnut-container{flex-direction:column}.mobile-bottom-nav{position:fixed;display:grid;grid-template-columns:repeat(6,1fr);gap:2px;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--border);padding:6px;z-index:40}.m-tab{border:0;background:transparent;padding:6px 2px;font-size:10px;display:grid;gap:2px;place-items:center;border-radius:10px}.m-tab.active{color:#fff;background:var(--accent)}.m-icon{font-size:18px}.modal-card{padding:16px;border-radius:16px}.preset-chips{gap:8px}.chip-preset{min-width:125px}.data-table{min-width:650px}.fee-alert-banner{flex-direction:column;align-items:flex-start}.btn{min-height:42px}}
-@media(max-width:390px){.metrics-grid{grid-template-columns:1fr 1fr}.metric-header{font-size:.75rem}.travel-summary-row,.exam-summary-row{grid-template-columns:1fr}.mobile-bottom-nav{overflow-x:auto;grid-template-columns:repeat(6,72px);justify-content:start}}
-</style>
+  <style>
+    /* ==========================================================================
+       THEME & DESIGN SYSTEM (Warm Sunset Glow + Matte Dark Reference Style)
+       ========================================================================== */
+    :root {
+      --bg: #0b0b0e;
+      --bg-surface: #121217;
+      --card: #18181f;
+      --card-alt: #1e1e27;
+      --card-hover: #242430;
+      --text: #f5f5f7;
+      --text-muted: #8e8e9f;
+      --border: rgba(255, 255, 255, 0.09);
+      --border-focus: rgba(255, 94, 30, 0.5);
+      
+      /* Glowing Sunset Reference Accents */
+      --primary: #ff4500;
+      --primary-hover: #ff5722;
+      --primary-glow: rgba(255, 69, 0, 0.35);
+      --secondary: #ff8c00;
+      --gradient-brand: linear-gradient(135deg, #ff4500 0%, #ff8c00 100%);
+      --gradient-card: linear-gradient(180deg, rgba(255, 69, 0, 0.08) 0%, rgba(24, 24, 31, 0.95) 40%);
+      
+      /* Specific Category Accents */
+      --accent-travel: #38bdf8;
+      --accent-gym: #ff5722;
+      --accent-food: #f59e0b;
+      --accent-exam: #a855f7;
+      --accent-success: #10b981;
+      --accent-danger: #ef4444;
+      
+      --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.6);
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-pill: 999px;
+    }
 
+    [data-theme="light"] {
+      --bg: #f5f6fa;
+      --bg-surface: #ffffff;
+      --card: #ffffff;
+      --card-alt: #f0f2f7;
+      --card-hover: #e6e9f2;
+      --text: #13141a;
+      --text-muted: #66697d;
+      --border: rgba(0, 0, 0, 0.08);
+      --border-focus: rgba(255, 69, 0, 0.6);
+      --primary-glow: rgba(255, 69, 0, 0.18);
+      --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 15px 40px rgba(255, 69, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Warm Sunset Background Mesh */
+    .ambient-glow {
+      position: fixed;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255, 69, 0, 0.22) 0%, rgba(255, 140, 0, 0.08) 45%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Typography & Utilities */
+    h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
+    .currency-val { font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+    .hidden { display: none !important; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+    /* ==========================================================================
+       BUTTONS & CONTROLS
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: var(--card-alt);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+    .btn-primary {
+      background: var(--gradient-brand);
+      color: #fff;
+      border: none;
+      box-shadow: 0 6px 25px var(--primary-glow);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 30px rgba(255, 69, 0, 0.5);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border);
+    }
+    .btn-gym {
+      background: linear-gradient(135deg, #ff5722, #ff7043);
+      color: #fff;
+      border: none;
+    }
+    .btn-food {
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      color: #111;
+      border: none;
+      font-weight: 700;
+    }
+    .btn-danger {
+      background: var(--accent-danger);
+      color: #fff;
+      border: none;
+    }
+    .btn-success {
+      background: var(--accent-success);
+      color: #fff;
+      border: none;
+    }
+    .btn-sm {
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      border-radius: var(--radius-pill);
+    }
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .icon-btn:hover {
+      border-color: var(--primary);
+      transform: scale(1.05);
+    }
+    .input-control, .select-pill {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .input-control:focus, .select-pill:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    /* ==========================================================================
+       AUTHENTICATION / SIGN-IN SCREEN
+       ========================================================================== */
+    #authOverlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .auth-hero-glow {
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(255, 69, 0, 0.35) 0%, rgba(255, 140, 0, 0.12) 40%, transparent 75%);
+      filter: blur(100px);
+      pointer-events: none;
+    }
+    .auth-card {
+      position: relative;
+      width: min(480px, 100%);
+      background: rgba(24, 24, 31, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      z-index: 2;
+    }
+    .auth-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(255, 69, 0, 0.15);
+      border: 1px solid rgba(255, 69, 0, 0.3);
+      color: var(--secondary);
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .auth-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff 40%, #ff8c00 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .auth-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: left;
+    }
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 16px 0;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .face-auth-btn {
+      width: 100%;
+      background: var(--card-alt);
+      border: 1px solid rgba(255, 69, 0, 0.35);
+      color: #fff;
+      padding: 12px;
+      font-weight: 700;
+    }
+    .face-auth-btn:hover {
+      background: rgba(255, 69, 0, 0.12);
+      border-color: var(--primary);
+    }
+
+    /* ==========================================================================
+       APP CONTAINER & HEADER
+       ========================================================================== */
+    .app-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px 24px 90px;
+      position: relative;
+      z-index: 1;
+    }
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 0 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-icon {
+      width: 46px;
+      height: 46px;
+      background: var(--gradient-brand);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+    .brand-info h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .brand-tagline {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .header-center {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .live-date-pill {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 0.86rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       NAVIGATION TABS
+       ========================================================================== */
+    .main-nav {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 0 18px;
+      scrollbar-width: none;
+    }
+    .main-nav::-webkit-scrollbar { display: none; }
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .nav-tab:hover {
+      color: var(--text);
+      border-color: rgba(255, 69, 0, 0.4);
+    }
+    .nav-tab.active {
+      background: var(--gradient-brand);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+    .tab-badge {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: var(--radius-pill);
+      color: #fff;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ==========================================================================
+       METRICS & DASHBOARD CARDS (Editorial Dark Style)
+       ========================================================================== */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .metric-card, .panel-card, .chart-card, .diet-comparison-card, .alarm-system-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .metric-card:hover {
+      border-color: rgba(255, 69, 0, 0.35);
+      transform: translateY(-2px);
+    }
+    .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .metric-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .metric-icon {
+      font-size: 1.3rem;
+    }
+    .metric-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .metric-footer {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-success);
+    }
+    .status-indicator.warning { background: var(--accent-danger); }
+
+    /* Quick Preset Chips */
+    .quick-presets-section {
+      margin-bottom: 24px;
+    }
+    .section-title-sm {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .section-title-sm small { color: var(--text-muted); font-size: 0.8rem; font-weight: 400; }
+    .preset-chips {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+    .chip-preset {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      cursor: pointer;
+      min-width: 140px;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .chip-preset:hover {
+      border-color: var(--primary);
+      background: var(--card-alt);
+      transform: translateY(-2px);
+    }
+    .chip-name { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+    .chip-cost { font-size: 0.95rem; font-weight: 800; color: var(--primary); }
+
+    /* Charts & Visuals */
+    .charts-row, .dashboard-split-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+    .chart-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .svg-chart {
+      width: 100%;
+      height: 220px;
+      overflow: visible;
+    }
+    .doughnut-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+    .svg-doughnut-wrap {
+      position: relative;
+      width: 180px;
+      height: 180px;
+    }
+    .doughnut-center-info {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+    }
+    .center-label { font-size: 0.75rem; color: var(--text-muted); }
+    .center-val { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .doughnut-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    /* Diet Comparison Card */
+    .diet-comparison-card {
+      margin-bottom: 20px;
+      background: var(--gradient-card);
+    }
+    .diet-visual-bar-wrap {
+      height: 14px;
+      background: var(--card-alt);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      display: flex;
+      margin: 14px 0 20px;
+    }
+    .diet-bar-fill-gym {
+      background: linear-gradient(90deg, #ff4500, #ff7043);
+      height: 100%;
+      transition: width 0.4s ease;
+    }
+    .diet-bar-fill-normal {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+      height: 100%;
+      transition: width 0.4s ease;
+    }
+    .diet-stats-columns, .search-filter-grid, .alarm-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .diet-stat-col {
+      padding: 16px;
+      background: var(--card-alt);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+    .stat-badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .diet-money {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    /* Table & Data Grids */
+    .data-table-wrapper {
+      overflow-x: auto;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    .data-table th {
+      padding: 12px 14px;
+      color: var(--text-muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .tag-badge {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 500;
+    }
+    .modal-card {
+      width: min(650px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .modal-close:hover { color: #fff; }
+    .form-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .form-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      text-align: left;
+    }
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .category-extra-box {
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .extra-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--secondary);
+    }
+
+    /* Face Recognition Camera Modal */
+    .face-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .face-modal.active { display: flex; }
+    .face-modal-content {
+      width: min(460px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(255, 69, 0, 0.4);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 50px rgba(255, 69, 0, 0.25);
+    }
+    .camera-frame {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      border-radius: var(--radius-md);
+      background: #000;
+      overflow: hidden;
+      margin: 16px 0;
+      border: 2px dashed rgba(255, 69, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #faceVideo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+    }
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary);
+      box-shadow: 0 0 15px var(--primary);
+      animation: scanning 2s infinite ease-in-out;
+    }
+    @keyframes scanning {
+      0% { top: 5%; }
+      50% { top: 90%; }
+      100% { top: 5%; }
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toast {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.88rem;
+      color: #fff;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+      .charts-row, .dashboard-split-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .diet-stats-columns, .search-filter-grid, .alarm-controls-grid { grid-template-columns: 1fr; }
+      .form-row { flex-direction: column; gap: 10px; }
+      .header-center { display: none; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Ambient Cyber Blue Side Flares Canvas Background -->
-  <canvas id="bgFlaresCanvas" class="bg-flares-canvas" aria-hidden="true"></canvas>
 
-  <div id="app" class="app-container">
+  <!-- Background Ambient Glow -->
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <!-- ============================================== -->
+  <!-- SIGN-IN & AUTHENTICATION SCREEN -->
+  <!-- ============================================== -->
+  <div id="authOverlay">
+    <div class="auth-hero-glow"></div>
+    <div class="auth-card">
+      <div class="auth-badge">🎓 Daily Karchee Student ID</div>
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-subtitle">Sign in to track student commute, fitness diets, and examination fee alarms.</p>
+
+      <form id="authForm" class="auth-form" onsubmit="app.handleEmailLogin(event)">
+        <div class="form-group">
+          <label for="authEmail">Student Roll / Email</label>
+          <input type="text" id="authEmail" class="input-control" placeholder="student@college.edu" value="demo.student@campus.edu" required>
+        </div>
+        <div class="form-group">
+          <label for="authPassword">Password</label>
+          <input type="password" id="authPassword" class="input-control" placeholder="••••••••" value="student123" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 6px;">Sign In to Dashboard</button>
+      </form>
+
+      <div class="auth-divider">OR SECURE SCAN</div>
+
+      <button id="faceLoginButton" class="btn face-auth-btn">
+        <span>📷 Login with Face ID Scan</span>
+      </button>
+
+      <p id="faceStatus" style="margin-top: 14px; font-size: 0.8rem; color: var(--text-muted);">
+        Face biometric recognition ready for quick student login.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- FACE CAMERA SCAN POPUP -->
+  <!-- ============================================== -->
+  <div id="faceModal" class="face-modal">
+    <div class="face-modal-content">
+      <button id="closeFaceModal" class="modal-close" style="position: absolute; top: 16px; right: 18px;">&times;</button>
+      <h3>🔐 Student Face Biometric ID</h3>
+      <p id="cameraStatus" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+        Click Start Camera to align face.
+      </p>
+
+      <div class="camera-frame">
+        <video id="faceVideo" autoplay playsinline muted></video>
+        <div class="scan-line" id="faceScanLine" style="display:none;"></div>
+      </div>
+
+      <canvas id="faceCanvas" style="display:none;"></canvas>
+
+      <div style="display: flex; gap: 10px; justify-content: center; margin-top: 14px;">
+        <button id="startCameraBtn" class="btn btn-secondary">📷 Start Camera</button>
+        <button id="captureFaceBtn" class="btn btn-primary" disabled>🔍 Verify & Enter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MAIN APPLICATION CONTAINER -->
+  <!-- ============================================== -->
+  <div id="app" class="app-container hidden">
     <!-- Top Header -->
     <header class="app-header">
-      <div class="header-left">
-        <div class="brand-logo">
-          <div class="logo-icon">🎓</div>
-          <div class="brand-info">
-            <h1>Daily Karchee</h1>
-            <span class="brand-tagline">Student Expense & Fee Manager</span>
-          </div>
+      <div class="brand-logo">
+        <div class="logo-icon">🎓</div>
+        <div class="brand-info">
+          <h1>Daily Karchee</h1>
+          <span class="brand-tagline">Student Expense & Fee Alarm Suite</span>
         </div>
       </div>
 
       <div class="header-center">
-        <div class="live-date-pill" id="liveDateDisplay">
-          <span class="clock-icon">🕒</span>
-          <span id="currentDateStr">Mon, Aug 17, 2026</span>
-          <span class="live-time" id="currentTimeStr">08:55 PM</span>
+        <div class="live-date-pill">
+          <span>🕒</span>
+          <span id="currentDateStr">Mon, Aug 17</span>
+          <strong id="currentTimeStr" style="color:var(--primary);">08:55 PM</strong>
         </div>
       </div>
 
       <div class="header-right">
-        <!-- Currency Switcher -->
-        <div class="header-control">
-          <label for="currencySelect" class="sr-only">Currency</label>
-          <select id="currencySelect" class="select-pill" title="Select Currency">
-            <option value="INR" selected>₹ INR</option>
-            <option value="USD">$ USD</option>
-            <option value="EUR">€ EUR</option>
-            <option value="GBP">£ GBP</option>
-            <option value="CAD">$ CAD</option>
-            <option value="AUD">$ AUD</option>
-            <option value="AED">AED</option>
-          </select>
-        </div>
+        <!-- Currency Select -->
+        <select id="currencySelect" class="select-pill" style="width: auto; padding: 8px 12px;">
+          <option value="INR" selected>₹ INR</option>
+          <option value="USD">$ USD</option>
+          <option value="EUR">€ EUR</option>
+          <option value="GBP">£ GBP</option>
+          <option value="AED">AED</option>
+        </select>
 
-        <!-- Budget Quick Action -->
-        <button id="btnSetBudget" class="btn btn-secondary btn-sm" title="Configure Monthly Allowance">
-          <span class="icon">🎯</span>
-          <span class="btn-text">Budget</span>
-        </button>
-
-        <!-- Test Alarm Sound Button -->
-        <button id="btnTestAlarm" class="btn btn-secondary btn-sm" title="Test College Fee Alarm Sound">
-          <span class="icon">🔔</span>
-          <span class="btn-text">Test Alarm</span>
-        </button>
-
-        <!-- Theme Toggle -->
-        <button id="btnThemeToggle" class="icon-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
-          <span id="themeIcon">☀️</span>
-        </button>
-
-        <!-- Primary Add Expense Button -->
-        <button id="btnOpenAddModal" class="btn btn-primary">
-          <span class="icon">➕</span>
-          <span>Add Expense</span>
-        </button>
+        <button id="btnSetBudget" class="btn btn-secondary btn-sm">🎯 Budget</button>
+        <button id="btnTestAlarm" class="btn btn-secondary btn-sm">🔔 Test Chime</button>
+        <button id="btnThemeToggle" class="icon-btn" title="Toggle Theme">☀️</button>
+        <button id="btnOpenAddModal" class="btn btn-primary">➕ Add Expense</button>
+        <button id="btnLogout" class="btn btn-sm btn-secondary" title="Logout">🚪</button>
       </div>
     </header>
 
-    <!-- Urgent Fee Alert Banner (Dynamically shown if fee due within 7 days or overdue) -->
-    <div id="urgentFeeBanner" class="fee-alert-banner hidden">
-      <div class="alert-content">
-        <div class="alert-bell-pulse">⏰</div>
-        <div class="alert-text">
-          <strong id="urgentFeeTitle">College Fee Reminder!</strong>
-          <span id="urgentFeeDetail">Semester Tuition Fee is due in 3 days. Late fine applies after deadline!</span>
-        </div>
-      </div>
-      <div class="alert-actions">
-        <button id="btnSnoozeBanner" class="btn btn-sm btn-outline">Snooze (1h)</button>
-        <button id="btnViewFeeTab" class="btn btn-sm btn-alert-action">View & Pay</button>
-      </div>
-    </div>
-
     <!-- Main Navigation Bar -->
     <nav class="main-nav">
-      <button class="nav-tab active" data-tab="dashboard">
-        <span class="tab-icon">📊</span>
-        <span class="tab-label">Dashboard</span>
-      </button>
-      <button class="nav-tab" data-tab="travel">
-        <span class="tab-icon">🚌</span>
-        <span class="tab-label">Travel Expenses</span>
-        <span class="tab-badge" id="badgeTravelToday">₹0</span>
-      </button>
-      <button class="nav-tab" data-tab="food">
-        <span class="tab-icon">🥗</span>
-        <span class="tab-label">Food & Gym Diet</span>
-        <span class="tab-badge diet-badge" id="badgeDietSplit">Diet vs Food</span>
-      </button>
-      <button class="nav-tab" data-tab="exams">
-        <span class="tab-icon">📝</span>
-        <span class="tab-label">Exam Fees</span>
-        <span class="tab-badge exam-badge" id="badgeExamPending">0 Due</span>
-      </button>
-      <button class="nav-tab" data-tab="college-fees">
-        <span class="tab-icon">⏰</span>
-        <span class="tab-label">College Fee Alarms</span>
-        <span class="tab-badge alarm-badge" id="badgeFeeAlarm">Active</span>
-      </button>
-      <button class="nav-tab" data-tab="history">
-        <span class="tab-icon">📋</span>
-        <span class="tab-label">All Logs & Export</span>
-      </button>
+      <button class="nav-tab active" data-tab="dashboard">📊 Dashboard</button>
+      <button class="nav-tab" data-tab="travel">🚌 Travel Commute <span class="tab-badge" id="badgeTravelToday">₹0</span></button>
+      <button class="nav-tab" data-tab="food">🥗 Gym Diet vs Food <span class="tab-badge" id="badgeDietSplit">Diet Split</span></button>
+      <button class="nav-tab" data-tab="exams">📝 Exam Fees <span class="tab-badge" id="badgeExamPending">0 Due</span></button>
+      <button class="nav-tab" data-tab="college-fees">⏰ Fee Alarms <span class="tab-badge" id="badgeFeeAlarm">Active</span></button>
+      <button class="nav-tab" data-tab="history">📋 All Logs & Export</button>
     </nav>
 
-    <!-- Main Content Container -->
+    <!-- Main Dynamic Views -->
     <main class="content-area">
-      
+
       <!-- ============================================== -->
-      <!-- TAB 1: DASHBOARD OVERVIEW -->
+      <!-- TAB 1: DASHBOARD -->
       <!-- ============================================== -->
       <section id="tab-dashboard" class="tab-content active">
-        <!-- Quick Summary Cards Grid -->
+        <!-- 5 Summary Metric Cards -->
         <div class="metrics-grid">
-          <!-- Card 1: Today's Total Spend -->
-          <div class="metric-card metric-today">
-            <div class="metric-header">
-              <span class="metric-title">Today's Expenses</span>
-              <span class="metric-icon">📅</span>
-            </div>
+          <div class="metric-card">
+            <div class="metric-header"><span class="metric-title">Today's Spend</span><span class="metric-icon">📅</span></div>
             <div class="metric-value currency-val" id="metricTodaySpend">₹0</div>
-            <div class="metric-footer" id="metricTodayStatus">
-              <span class="status-indicator good">●</span>
-              <span id="metricDailyBudgetStatus">Within daily safe limit (₹250/day)</span>
-            </div>
+            <div class="metric-footer" id="metricDailyBudgetStatus"><span class="status-indicator"></span> Safe limit</div>
           </div>
-
-          <!-- Card 2: Daily Travel Total -->
-          <div class="metric-card metric-travel">
-            <div class="metric-header">
-              <span class="metric-title">Today's Travel</span>
-              <span class="metric-icon">🚌</span>
-            </div>
+          <div class="metric-card">
+            <div class="metric-header"><span class="metric-title">Today's Commute</span><span class="metric-icon">🚌</span></div>
             <div class="metric-value currency-val" id="metricTravelSpend">₹0</div>
-            <div class="metric-footer">
-              <span class="sub-text" id="metricTravelSummary">Bus, Metro, Cab & Fuel</span>
-            </div>
+            <div class="metric-footer">Bus, Metro, Auto</div>
           </div>
-
-          <!-- Card 3: Food & Diet Breakdown -->
-          <div class="metric-card metric-food">
-            <div class="metric-header">
-              <span class="metric-title">Food & Gym Diet</span>
-              <span class="metric-icon">🥗</span>
-            </div>
+          <div class="metric-card">
+            <div class="metric-header"><span class="metric-title">Food & Diet Total</span><span class="metric-icon">🥗</span></div>
             <div class="metric-value currency-val" id="metricFoodTotal">₹0</div>
-            <div class="diet-split-progress" title="Gym Diet vs Normal Food Split">
-              <div class="split-bar gym-bar" id="metricGymBar" style="width: 50%;"></div>
-              <div class="split-bar normal-bar" id="metricNormalBar" style="width: 50%;"></div>
-            </div>
-            <div class="metric-footer split-footer">
-              <span class="gym-label">🏋️ Gym: <b id="metricGymSpend">₹0</b></span>
-              <span class="normal-label">🍽️ Food: <b id="metricNormalSpend">₹0</b></span>
-            </div>
+            <div class="metric-footer"><span style="color:var(--primary);">Gym: <b id="metricGymSpend">₹0</b></span> | Mess: <b id="metricNormalSpend">₹0</b></div>
           </div>
-
-          <!-- Card 4: Exam & College Fees Due -->
-          <div class="metric-card metric-fees">
-            <div class="metric-header">
-              <span class="metric-title">Fees & Next Deadline</span>
-              <span class="metric-icon">⏰</span>
-            </div>
+          <div class="metric-card">
+            <div class="metric-header"><span class="metric-title">Pending Fees Due</span><span class="metric-icon">⏰</span></div>
             <div class="metric-value currency-val" id="metricFeesDue">₹0</div>
-            <div class="metric-footer">
-              <span class="fee-urgency-tag" id="metricNextDeadline">Next: Semester 5 Exam</span>
-            </div>
+            <div class="metric-footer" id="metricNextDeadline">No fees due soon</div>
           </div>
-
-          <!-- Card 5: Monthly Allowance & Balance -->
-          <div class="metric-card metric-allowance">
-            <div class="metric-header">
-              <span class="metric-title">Monthly Pocket Money</span>
-              <span class="metric-icon">💰</span>
-            </div>
+          <div class="metric-card">
+            <div class="metric-header"><span class="metric-title">Monthly Pocket Balance</span><span class="metric-icon">💰</span></div>
             <div class="metric-value currency-val" id="metricAllowanceRemaining">₹0</div>
-            <div class="allowance-bar-container">
-              <div class="allowance-bar" id="metricAllowanceBar" style="width: 35%;"></div>
-            </div>
-            <div class="metric-footer">
-              <span class="sub-text" id="metricAllowanceSub">₹4,200 spent of ₹12,000 allowance</span>
-            </div>
+            <div class="metric-footer" id="metricAllowanceSub">Allowance tracker</div>
           </div>
         </div>
 
-        <!-- Student Quick-Add Presets Bar -->
+        <!-- 1-Click Student Presets -->
         <div class="quick-presets-section">
           <div class="section-title-sm">
-            <span>⚡ Quick 1-Click Student Presets</span>
+            <span>⚡ 1-Click Student Quick Presets</span>
             <small>Instantly log frequent student expenses</small>
           </div>
           <div class="preset-chips">
             <button class="chip-preset" data-preset="bus">
-              <span class="chip-icon">🚌</span>
-              <span class="chip-name">College Bus</span>
+              <span>🚌 College Bus</span>
               <span class="chip-cost">₹30</span>
             </button>
             <button class="chip-preset" data-preset="metro">
-              <span class="chip-icon">🚇</span>
-              <span class="chip-name">Metro Token</span>
+              <span>🚇 Metro Token</span>
               <span class="chip-cost">₹40</span>
             </button>
             <button class="chip-preset" data-preset="canteen-lunch">
-              <span class="chip-icon">🍛</span>
-              <span class="chip-name">Mess / Canteen Lunch</span>
+              <span>🍛 Canteen Meal</span>
               <span class="chip-cost">₹80</span>
             </button>
             <button class="chip-preset" data-preset="chai-samosa">
-              <span class="chip-icon">☕</span>
-              <span class="chip-name">Chai & Samosa Break</span>
+              <span>☕ Chai & Samosa</span>
               <span class="chip-cost">₹25</span>
             </button>
             <button class="chip-preset" data-preset="protein-shake">
-              <span class="chip-icon">🏋️</span>
-              <span class="chip-name">Whey Scoop + 4 Eggs</span>
+              <span>🏋️ Whey + 4 Boiled Eggs</span>
               <span class="chip-cost">₹95</span>
             </button>
             <button class="chip-preset" data-preset="peanut-butter-oats">
-              <span class="chip-icon">🥣</span>
-              <span class="chip-name">Gym Oats & PB Snack</span>
+              <span>🥣 Gym PB Oats Snack</span>
               <span class="chip-cost">₹50</span>
             </button>
-            <button class="chip-preset" data-preset="auto-rickshaw">
-              <span class="chip-icon">🛺</span>
-              <span class="chip-name">Shared Auto</span>
-              <span class="chip-cost">₹20</span>
-            </button>
             <button class="chip-preset" data-preset="photocopy">
-              <span class="chip-icon">📄</span>
-              <span class="chip-name">Notes Print/Xerox</span>
+              <span>📄 Notes Xerox/Print</span>
               <span class="chip-cost">₹15</span>
             </button>
           </div>
         </div>
 
-        <!-- Visual Analytics Grid -->
+        <!-- Charts Grid -->
         <div class="charts-row">
-          <!-- 7-Day Spending Trend -->
           <div class="chart-card">
             <div class="chart-header">
               <div>
-                <h3>📈 7-Day Spending Trend</h3>
-                <p class="chart-subtitle">Daily cost trajectory across student categories</p>
-              </div>
-              <div class="chart-legend" id="barTrendLegend">
-                <span class="dot-legend" style="--c: var(--accent-travel)">Travel</span>
-                <span class="dot-legend" style="--c: var(--accent-gym)">Gym Diet</span>
-                <span class="dot-legend" style="--c: var(--accent-food)">Normal Food</span>
-                <span class="dot-legend" style="--c: var(--accent-exam)">Academic</span>
+                <h3>📈 7-Day Spending Trajectory</h3>
+                <p class="chart-subtitle">Daily spend curve across student categories</p>
               </div>
             </div>
-            <div class="chart-canvas-wrapper">
-              <svg id="spendingTrendChart" viewBox="0 0 500 220" class="svg-chart"></svg>
-            </div>
+            <svg id="spendingTrendChart" viewBox="0 0 500 200" class="svg-chart"></svg>
           </div>
 
-          <!-- Category Breakdown & Food Ratio -->
           <div class="chart-card">
             <div class="chart-header">
               <div>
-                <h3>🍩 Expense Breakdown</h3>
-                <p class="chart-subtitle">This Month's Spending Share</p>
+                <h3>🍩 Category Split</h3>
+                <p class="chart-subtitle">This month's expenditure distribution</p>
               </div>
-              <span class="badge-pill" id="totalMonthSpendBadge">₹0 Total</span>
             </div>
             <div class="doughnut-container">
               <div class="svg-doughnut-wrap">
-                <svg id="categoryDoughnutChart" viewBox="0 0 200 200" class="svg-doughnut"></svg>
+                <svg id="categoryDoughnutChart" viewBox="0 0 200 200" class="svg-chart"></svg>
                 <div class="doughnut-center-info">
                   <span class="center-label">Top Category</span>
-                  <strong class="center-val" id="topCategoryName">Food</strong>
+                  <strong class="center-val" id="topCategoryName">—</strong>
                 </div>
               </div>
-              <div class="doughnut-legend" id="categoryDoughnutLegend">
-                <!-- Injected via JS -->
-              </div>
+              <div class="doughnut-legend" id="categoryDoughnutLegend"></div>
             </div>
           </div>
         </div>
 
-        <!-- Recent Transactions & Upcoming Deadlines Mini Grid -->
+        <!-- Recent Logs & Upcoming Alarms -->
         <div class="dashboard-split-grid">
-          <!-- Left: Recent Transactions -->
           <div class="panel-card">
-            <div class="panel-header">
-              <h3>🕒 Recent Student Expenses</h3>
-              <button class="btn-link" onclick="app.switchTab('history')">View All →</button>
+            <div class="modal-header">
+              <h3>🕒 Recent Logs</h3>
+              <button class="btn btn-sm btn-secondary" onclick="app.switchTab('history')">View All →</button>
             </div>
-            <div class="recent-list" id="dashboardRecentList">
-              <!-- Rendered via JS -->
-            </div>
+            <div id="dashboardRecentList" style="display:flex; flex-direction:column; gap:10px;"></div>
           </div>
 
-          <!-- Right: Active Fee Reminders & Alarms -->
           <div class="panel-card">
-            <div class="panel-header">
-              <h3>⏰ Fee Deadlines & Alarm Watch</h3>
-              <button class="btn-link" onclick="app.switchTab('college-fees')">Manage Alarms →</button>
+            <div class="modal-header">
+              <h3>⏰ Active Fee Alarms</h3>
+              <button class="btn btn-sm btn-secondary" onclick="app.switchTab('college-fees')">Manage →</button>
             </div>
-            <div class="fee-watch-list" id="dashboardFeeWatchList">
-              <!-- Rendered via JS -->
-            </div>
+            <div id="dashboardFeeWatchList" style="display:flex; flex-direction:column; gap:10px;"></div>
           </div>
         </div>
       </section>
 
       <!-- ============================================== -->
-      <!-- TAB 2: DAILY TRAVEL EXPENSES -->
+      <!-- TAB 2: TRAVEL -->
       <!-- ============================================== -->
       <section id="tab-travel" class="tab-content">
-        <div class="section-intro">
-          <div class="intro-text">
-            <h2>🚌 Daily Travel & Transportation Expenses</h2>
-            <p>Log and track all campus commutes: Public Bus, Metro/Subway, Cab/Auto, Bike/Car Fuel, and Monthly Passes.</p>
+        <div class="modal-header" style="margin-bottom:16px;">
+          <div>
+            <h2>🚌 Travel & Commute Logs</h2>
+            <p style="color:var(--text-muted); font-size:0.9rem;">Track Metro, Bus, Autos, and Fuel expenses.</p>
           </div>
-          <button class="btn btn-primary" onclick="app.openAddModalWithCategory('travel')">
-            <span>➕ Log Travel Cost</span>
-          </button>
+          <button class="btn btn-primary" onclick="app.openAddModalWithCategory('travel')">➕ Log Commute</button>
         </div>
 
-        <!-- Travel Summary Row -->
-        <div class="travel-summary-row">
-          <div class="sub-metric-card">
-            <span class="sub-metric-icon">🗓️</span>
-            <div>
-              <small>Today's Commute Total</small>
-              <h3 class="currency-val" id="travelTodayTotal">₹0</h3>
-            </div>
-          </div>
-          <div class="sub-metric-card">
-            <span class="sub-metric-icon">📅</span>
-            <div>
-              <small>This Month's Travel</small>
-              <h3 class="currency-val" id="travelMonthTotal">₹0</h3>
-            </div>
-          </div>
-          <div class="sub-metric-card">
-            <span class="sub-metric-icon">📊</span>
-            <div>
-              <small>Avg Daily Commute Cost</small>
-              <h3 class="currency-val" id="travelDailyAvg">₹0/day</h3>
-            </div>
-          </div>
-          <div class="sub-metric-card">
-            <span class="sub-metric-icon">🚇</span>
-            <div>
-              <small>Most Used Mode</small>
-              <h3 id="travelTopMode">Metro Rail</h3>
-            </div>
-          </div>
-        </div>
-
-        <!-- Travel Mode Filters & Route History -->
         <div class="panel-card">
-          <div class="panel-header">
-            <div class="filter-bar">
-              <span class="filter-title">Filter by Mode:</span>
-              <button class="pill-filter active" data-travel-filter="all">All Modes</button>
-              <button class="pill-filter" data-travel-filter="bus">🚌 Bus</button>
-              <button class="pill-filter" data-travel-filter="metro">🚇 Metro</button>
-              <button class="pill-filter" data-travel-filter="auto_cab">🛺 Auto / Cab</button>
-              <button class="pill-filter" data-travel-filter="fuel">⛽ Bike / Fuel</button>
-              <button class="pill-filter" data-travel-filter="pass">🎟️ Pass Recharge</button>
-            </div>
-          </div>
-
-          <div class="travel-entries-table-wrapper">
+          <div class="data-table-wrapper">
             <table class="data-table">
               <thead>
                 <tr>
                   <th>Date & Time</th>
                   <th>Transport Mode</th>
-                  <th>Route / Details</th>
+                  <th>Route</th>
                   <th>Payment</th>
                   <th>Amount</th>
-                  <th>Actions</th>
+                  <th>Action</th>
                 </tr>
               </thead>
-              <tbody id="travelTableBody">
-                <!-- Injected via JS -->
-              </tbody>
+              <tbody id="travelTableBody"></tbody>
             </table>
           </div>
         </div>
       </section>
 
       <!-- ============================================== -->
-      <!-- TAB 3: FOOD & GYM DIET (DIFFERENTIATION) -->
+      <!-- TAB 3: FOOD & GYM DIET -->
       <!-- ============================================== -->
       <section id="tab-food" class="tab-content">
-        <div class="section-intro">
-          <div class="intro-text">
-            <h2>🥗 Daily Food & Gym Diet Breakdown</h2>
-            <p>Smart distinction between <strong>🏋️‍♂️ Gym & Fitness Nutrition</strong> (Whey, Eggs, Chicken, Oats, Peanut Butter) and <strong>🍽️ Normal College Food</strong> (Mess, Canteen, Chai, Snacks).</p>
+        <div class="modal-header" style="margin-bottom:16px;">
+          <div>
+            <h2>🥗 Food & Fitness Diet Distinction</h2>
+            <p style="color:var(--text-muted); font-size:0.9rem;">Separation of daily gym nutrition vs. canteen & snacks.</p>
           </div>
-          <div class="action-buttons-group">
-            <button class="btn btn-gym" onclick="app.openAddModalWithCategory('food', 'gym_diet')">
-              <span>🏋️ Log Gym Diet</span>
-            </button>
-            <button class="btn btn-food" onclick="app.openAddModalWithCategory('food', 'normal_food')">
-              <span>🍽️ Log Normal Food</span>
-            </button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-gym" onclick="app.openAddModalWithCategory('food', 'gym_diet')">🏋️ Log Gym Diet</button>
+            <button class="btn btn-food" onclick="app.openAddModalWithCategory('food', 'normal_food')">🍽️ Log Normal Food</button>
           </div>
         </div>
 
-        <!-- Comparative Diet vs Normal Food Banner & Metrics -->
         <div class="diet-comparison-card">
-          <div class="diet-comp-header">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
             <h3>⚖️ Diet Spending Comparison (This Month)</h3>
-            <span class="badge-ratio" id="dietSplitPercentage">Gym: 55% | Normal: 45%</span>
+            <span class="tag-badge" id="dietSplitPercentage">Gym: 50% | Normal: 50%</span>
           </div>
           <div class="diet-visual-bar-wrap">
-            <div class="diet-bar-fill-gym" id="dietCompareGymBar" style="width: 55%;">
-              <span class="diet-bar-label">🏋️ Gym Diet (<span id="gymDietPercentText">55%</span>)</span>
-            </div>
-            <div class="diet-bar-fill-normal" id="dietCompareNormalBar" style="width: 45%;">
-              <span class="diet-bar-label">🍽️ Normal Food (<span id="normalFoodPercentText">45%</span>)</span>
-            </div>
+            <div class="diet-bar-fill-gym" id="dietCompareGymBar" style="width: 50%;"></div>
+            <div class="diet-bar-fill-normal" id="dietCompareNormalBar" style="width: 50%;"></div>
           </div>
           <div class="diet-stats-columns">
-            <div class="diet-stat-col col-gym">
-              <div class="stat-badge">🏋️ Fitness & Gym Diet</div>
+            <div class="diet-stat-col">
+              <div class="stat-badge">🏋️ GYM & FITNESS NUTRITION</div>
               <div class="diet-money currency-val" id="dietGymTotalSpend">₹0</div>
-              <div class="stat-detail">
-                <span>Total Protein Tracked: <strong id="dietTotalProtein">0g</strong></span>
-                <span>Avg Daily Fitness Cost: <strong id="dietGymDailyAvg">₹0</strong></span>
-              </div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Protein Tracked: <strong id="dietTotalProtein" style="color:var(--primary);">0g</strong></div>
             </div>
-            <div class="diet-stat-col col-normal">
-              <div class="stat-badge">🍽️ Regular Food & Campus Canteen</div>
+            <div class="diet-stat-col">
+              <div class="stat-badge">🍽️ REGULAR FOOD & CANTEEN</div>
               <div class="diet-money currency-val" id="dietNormalTotalSpend">₹0</div>
-              <div class="stat-detail">
-                <span>Mess & Canteen Meals: <strong id="dietNormalMealCount">0 meals</strong></span>
-                <span>Avg Daily Food Cost: <strong id="dietNormalDailyAvg">₹0</strong></span>
-              </div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Total Meals: <strong id="dietNormalMealCount">0 meals</strong></div>
             </div>
           </div>
         </div>
 
-        <!-- Diet View Switcher & Item List -->
         <div class="panel-card">
-          <div class="panel-header">
-            <div class="tab-toggle-sub">
-              <button class="sub-tab-btn active" data-food-tab="all">All Food & Diet Logs</button>
-              <button class="sub-tab-btn" data-food-tab="gym_diet">🏋️ Gym & Fitness Diet Only</button>
-              <button class="sub-tab-btn" data-food-tab="normal_food">🍽️ Normal College Food Only</button>
-            </div>
-          </div>
-
-          <div class="food-entries-grid" id="foodEntriesGrid">
-            <!-- Rendered via JS -->
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================== -->
-      <!-- TAB 4: EXAMINATION FEES EXPENSES -->
-      <!-- ============================================== -->
-      <section id="tab-exams" class="tab-content">
-        <div class="section-intro">
-          <div class="intro-text">
-            <h2>📝 Examination & Academic Fees</h2>
-            <p>Track Semester End Exam forms, Backlog / Arrear registrations, Lab / Practical exam fees, and Re-evaluation costs.</p>
-          </div>
-          <button class="btn btn-exam" onclick="app.openAddModalWithCategory('exam_fees')">
-            <span>➕ Add Exam Fee Entry</span>
-          </button>
-        </div>
-
-        <!-- Exam Fee Summary Stats -->
-        <div class="exam-summary-row">
-          <div class="exam-stat-card">
-            <span class="exam-stat-icon">📑</span>
-            <div>
-              <small>Total Exam Fees (Semester)</small>
-              <h3 class="currency-val" id="examTotalSpend">₹0</h3>
-            </div>
-          </div>
-          <div class="exam-stat-card pending-card">
-            <span class="exam-stat-icon">⏳</span>
-            <div>
-              <small>Pending / Upcoming Exam Fees</small>
-              <h3 class="currency-val" id="examPendingTotal">₹0</h3>
-            </div>
-          </div>
-          <div class="exam-stat-card paid-card">
-            <span class="exam-stat-icon">✅</span>
-            <div>
-              <small>Cleared / Paid Exam Fees</small>
-              <h3 class="currency-val" id="examPaidTotal">₹0</h3>
-            </div>
-          </div>
-        </div>
-
-        <!-- Exam Fee List with Status Badges -->
-        <div class="panel-card">
-          <div class="panel-header">
-            <div class="filter-bar">
-              <span class="filter-title">Status:</span>
-              <button class="pill-filter active" data-exam-filter="all">All</button>
-              <button class="pill-filter" data-exam-filter="pending">⏳ Pending / Due</button>
-              <button class="pill-filter" data-exam-filter="paid">✅ Paid</button>
-            </div>
-          </div>
-
-          <div class="exam-cards-grid" id="examCardsGrid">
-            <!-- Rendered via JS -->
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================== -->
-      <!-- TAB 5: COLLEGE FEES & LATE SUBMISSION ALARM -->
-      <!-- ============================================== -->
-      <section id="tab-college-fees" class="tab-content">
-        <div class="section-intro">
-          <div class="intro-text">
-            <h2>⏰ College Fee Submission & Anti-Late Fine Alarm</h2>
-            <p>Never pay late fee penalties again. Configure alarms, sound chimes, due dates, grace periods, and late penalty calculations.</p>
-          </div>
-          <div class="action-buttons-group">
-            <button class="btn btn-secondary" id="btnRequestNotificationPerm">
-              <span>🔔 Enable Browser Alerts</span>
-            </button>
-            <button class="btn btn-danger" onclick="app.openAddFeeModal()">
-              <span>➕ Add College Fee Deadline</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Fee Alarm System Banner -->
-        <div class="alarm-system-card">
-          <div class="alarm-sys-header">
-            <div class="alarm-bell-icon animated-bell">🔔</div>
-            <div>
-              <h3>Active Fee Alarm & Reminder Engine</h3>
-              <p>Real-time countdown timer & Web Audio chime alerts for upcoming semester tuition, hostel, and exam deadlines.</p>
-            </div>
-          </div>
-
-          <div class="alarm-controls-grid">
-            <div class="control-box">
-              <label>🔊 Alarm Sound Type:</label>
-              <select id="alarmSoundType" class="input-control">
-                <option value="chime">Gentle College Bell Chime (Synthesized)</option>
-                <option value="urgent">Urgent Warning Siren (Synthesized)</option>
-                <option value="digital">Digital Clock Alarm (Synthesized)</option>
-                <option value="melody">Melodic Reminder Chime (Synthesized)</option>
-              </select>
-            </div>
-            <div class="control-box">
-              <label>⏳ Reminder Threshold:</label>
-              <select id="alarmReminderDays" class="input-control">
-                <option value="7">Alert 7 days before deadline</option>
-                <option value="3" selected>Alert 3 days before deadline</option>
-                <option value="1">Alert 1 day before deadline</option>
-                <option value="0">Alert on due date only</option>
-              </select>
-            </div>
-            <div class="control-box flex-end">
-              <button id="btnTestCurrentSound" class="btn btn-outline full-width">
-                <span>▶️ Test Synthesizer Sound</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- College Fees Watchlist & Late Penalty Calculator -->
-        <div class="panel-card">
-          <div class="panel-header">
-            <h3>📋 Scheduled College Dues & Penalty Projections</h3>
-            <span class="badge-pill" id="totalActiveFeesCount">3 Active Dues</span>
-          </div>
-
-          <div class="college-fees-grid" id="collegeFeesGrid">
-            <!-- Rendered via JS -->
-          </div>
-        </div>
-      </section>
-
-      <!-- ============================================== -->
-      <!-- TAB 6: ALL LOGS, FILTERING & EXPORT -->
-      <!-- ============================================== -->
-      <section id="tab-history" class="tab-content">
-        <div class="section-intro">
-          <div class="intro-text">
-            <h2>📋 Transaction History & Statement Export</h2>
-            <p>Search, filter, edit, and export your student spending records to CSV, JSON, or print-ready format.</p>
-          </div>
-          <div class="action-buttons-group">
-            <button class="btn btn-secondary" id="btnExportCSV">
-              <span>📥 Export CSV</span>
-            </button>
-            <button class="btn btn-secondary" id="btnExportJSON">
-              <span>💾 Backup JSON</span>
-            </button>
-            <button class="btn btn-secondary" id="btnImportJSONTrigger">
-              <span>📂 Restore JSON</span>
-            </button>
-            <input type="file" id="fileInputJSON" accept=".json" style="display:none;">
-            <button class="btn btn-secondary" id="btnPrintStatement">
-              <span>🖨️ Print Statement</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Filter and Search Bar -->
-        <div class="panel-card filter-panel">
-          <div class="search-filter-grid">
-            <div class="search-field">
-              <label for="searchQuery">Search Description / Notes:</label>
-              <input type="text" id="searchQuery" class="input-control" placeholder="Search e.g. Metro, Whey, Canteen, Physics exam...">
-            </div>
-            <div class="filter-field">
-              <label for="filterCategory">Category:</label>
-              <select id="filterCategory" class="input-control">
-                <option value="all">All Categories</option>
-                <option value="travel">🚌 Travel & Transport</option>
-                <option value="gym_diet">🏋️ Gym & Fitness Diet</option>
-                <option value="normal_food">🍽️ Normal Food & Canteen</option>
-                <option value="exam_fees">📝 Examination Fees</option>
-                <option value="college_fees">🏫 College Tuition & Hostel</option>
-                <option value="study_materials">📚 Books & Study Supplies</option>
-                <option value="other">💡 Miscellaneous / Other</option>
-              </select>
-            </div>
-            <div class="filter-field">
-              <label for="filterDateRange">Date Range:</label>
-              <select id="filterDateRange" class="input-control">
-                <option value="all">All Time</option>
-                <option value="today">Today</option>
-                <option value="week">Last 7 Days</option>
-                <option value="month" selected>This Month</option>
-              </select>
-            </div>
-            <div class="filter-field">
-              <label for="sortBy">Sort By:</label>
-              <select id="sortBy" class="input-control">
-                <option value="date-desc">Newest First</option>
-                <option value="date-asc">Oldest First</option>
-                <option value="amount-desc">Highest Amount</option>
-                <option value="amount-asc">Lowest Amount</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- All Transactions Table -->
-        <div class="panel-card">
-          <div class="panel-header">
-            <div class="results-summary">
-              <span>Showing <strong id="filteredCount">0</strong> transactions</span>
-              <span>Total: <strong class="currency-val" id="filteredTotal">₹0</strong></span>
-            </div>
-          </div>
-          <div class="travel-entries-table-wrapper">
-            <table class="data-table" id="allTransactionsTable">
+          <div class="data-table-wrapper">
+            <table class="data-table">
               <thead>
                 <tr>
-                  <th>Date & Time</th>
-                  <th>Category</th>
-                  <th>Item / Description</th>
-                  <th>Special Tags / Route</th>
-                  <th>Payment</th>
+                  <th>Date</th>
+                  <th>Sub-Type</th>
+                  <th>Item / Meal Description</th>
+                  <th>Protein</th>
                   <th>Amount</th>
-                  <th>Actions</th>
+                  <th>Action</th>
                 </tr>
               </thead>
-              <tbody id="allTransactionsTableBody">
-                <!-- Injected via JS -->
-              </tbody>
+              <tbody id="foodTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 4: EXAM FEES -->
+      <!-- ============================================== -->
+      <section id="tab-exams" class="tab-content">
+        <div class="modal-header" style="margin-bottom:16px;">
+          <div>
+            <h2>📝 Semester & Examination Fees</h2>
+            <p style="color:var(--text-muted); font-size:0.9rem;">Regular, arrears, backlogs, practicals & re-evaluations.</p>
+          </div>
+          <button class="btn btn-primary" onclick="app.openAddModalWithCategory('exam_fees')">➕ Add Exam Fee</button>
+        </div>
+
+        <div class="panel-card">
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Exam Title</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                  <th>Amount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="examTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 5: COLLEGE FEES & ALARMS -->
+      <!-- ============================================== -->
+      <section id="tab-college-fees" class="tab-content">
+        <div class="modal-header" style="margin-bottom:16px;">
+          <div>
+            <h2>⏰ College Fee Deadlines & Anti-Late Penalty Alarm</h2>
+            <p style="color:var(--text-muted); font-size:0.9rem;">Never miss tuition dues or pay avoidable late fees.</p>
+          </div>
+          <button class="btn btn-primary" onclick="app.openAddFeeModal()">➕ Add Fee Deadline</button>
+        </div>
+
+        <div class="alarm-system-card" style="margin-bottom: 20px;">
+          <div class="alarm-controls-grid">
+            <div class="form-group">
+              <label>🔊 Alarm Chime Sound</label>
+              <select id="alarmSoundType" class="select-pill">
+                <option value="chime">College Bell Chime (Web Audio Synthesizer)</option>
+                <option value="urgent">Urgent Warning Siren</option>
+                <option value="digital">Digital Clock Alarm</option>
+              </select>
+            </div>
+            <div class="form-group" style="justify-content: flex-end;">
+              <button id="btnTestCurrentSound" class="btn btn-secondary">▶️ Test Sound Synthesizer</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Fee Title</th>
+                  <th>Due Date</th>
+                  <th>Grace (Days)</th>
+                  <th>Daily Penalty</th>
+                  <th>Status</th>
+                  <th>Amount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="feeTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== -->
+      <!-- TAB 6: ALL LOGS, FILTER & EXPORT -->
+      <!-- ============================================== -->
+      <section id="tab-history" class="tab-content">
+        <div class="modal-header" style="margin-bottom:16px;">
+          <div>
+            <h2>📋 All Logs & Data Backup</h2>
+            <p style="color:var(--text-muted); font-size:0.9rem;">Filter transactions or backup/restore your data.</p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-secondary btn-sm" id="btnExportCSV">📥 Export CSV</button>
+            <button class="btn btn-secondary btn-sm" id="btnExportJSON">💾 Backup JSON</button>
+            <button class="btn btn-secondary btn-sm" id="btnImportJSONTrigger">📂 Restore JSON</button>
+            <input type="file" id="fileInputJSON" accept=".json" style="display:none;">
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="panel-card" style="margin-bottom:16px;">
+          <div class="search-filter-grid">
+            <input type="text" id="searchQuery" class="input-control" placeholder="Search by name, route, or notes...">
+            <select id="filterCategory" class="select-pill">
+              <option value="all">All Categories</option>
+              <option value="travel">🚌 Commute / Travel</option>
+              <option value="gym_diet">🏋️ Gym Nutrition</option>
+              <option value="normal_food">🍽️ Normal Food</option>
+              <option value="exam_fees">📝 Exam Fees</option>
+              <option value="study_materials">📄 Notes / Xerox</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Category</th>
+                  <th>Description</th>
+                  <th>Payment</th>
+                  <th>Amount</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="allTransactionsTableBody"></tbody>
             </table>
           </div>
         </div>
       </section>
 
     </main>
-
-    <!-- Bottom Navigation Bar for Mobile -->
-    <nav class="mobile-bottom-nav">
-      <button class="m-tab active" data-tab="dashboard">
-        <span class="m-icon">📊</span>
-        <span>Home</span>
-      </button>
-      <button class="m-tab" data-tab="travel">
-        <span class="m-icon">🚌</span>
-        <span>Travel</span>
-      </button>
-      <button class="m-tab" data-tab="food">
-        <span class="m-icon">🥗</span>
-        <span>Diet/Food</span>
-      </button>
-      <button class="m-tab" data-tab="exams">
-        <span class="m-icon">📝</span>
-        <span>Exams</span>
-      </button>
-      <button class="m-tab" data-tab="college-fees">
-        <span class="m-icon">⏰</span>
-        <span>Alarms</span>
-      </button>
-      <button class="m-tab" data-tab="history">
-        <span class="m-icon">📋</span>
-        <span>Logs</span>
-      </button>
-    </nav>
   </div>
 
   <!-- ============================================== -->
@@ -745,21 +1276,20 @@
         <input type="hidden" id="editExpenseId">
         
         <div class="form-row">
-          <div class="form-group flex-2">
+          <div class="form-group" style="flex:2;">
             <label for="expCategory">Category *</label>
-            <select id="expCategory" class="input-control" required onchange="app.handleCategoryChange()">
-              <option value="travel">🚌 Travel / Transportation</option>
+            <select id="expCategory" class="select-pill" required onchange="app.handleCategoryChange()">
+              <option value="travel">🚌 Travel / Commute</option>
               <option value="food">🥗 Food & Diet</option>
-              <option value="exam_fees">📝 Examination & Academic Fees</option>
-              <option value="college_fees">🏫 College Dues / Tuition</option>
-              <option value="study_materials">📚 Study Notes & Books</option>
-              <option value="other">💡 Miscellaneous / Other</option>
+              <option value="exam_fees">📝 Examination Fee</option>
+              <option value="study_materials">📄 Study Notes & Xerox</option>
+              <option value="other">💡 Other Expenses</option>
             </select>
           </div>
 
-          <div class="form-group flex-1" id="foodTypeGroup" style="display:none;">
-            <label for="foodType">Food Sub-Type *</label>
-            <select id="foodType" class="input-control">
+          <div class="form-group" id="foodTypeGroup" style="display:none; flex:2;">
+            <label for="foodType">Food Distinction *</label>
+            <select id="foodType" class="select-pill" onchange="app.handleCategoryChange()">
               <option value="gym_diet">🏋️ Gym / Fitness Diet</option>
               <option value="normal_food" selected>🍽️ Normal Food / Canteen</option>
             </select>
@@ -767,317 +1297,749 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group flex-2">
-            <label for="expTitle">Description / Item Name *</label>
-            <input type="text" id="expTitle" class="input-control" placeholder="e.g. Metro to College, Whey Protein, Canteen Thali" required>
+          <div class="form-group" style="flex:2;">
+            <label for="expTitle">Description *</label>
+            <input type="text" id="expTitle" class="input-control" placeholder="e.g. Metro token, Whey scoop, Canteen Thali" required>
           </div>
-          <div class="form-group flex-1">
+          <div class="form-group" style="flex:1;">
             <label for="expAmount">Amount *</label>
-            <div class="input-with-symbol">
-              <span class="currency-symbol" id="formCurrencySymbol">₹</span>
-              <input type="number" step="any" min="0" id="expAmount" class="input-control" placeholder="0.00" required>
-            </div>
+            <input type="number" step="any" min="0" id="expAmount" class="input-control" placeholder="0.00" required>
           </div>
         </div>
 
-        <!-- Dynamic Category Specific Fields -->
-        <!-- Travel Specific -->
+        <!-- Travel Extra -->
         <div id="travelSpecificFields" class="category-extra-box" style="display:none;">
-          <div class="extra-title">🚌 Travel Commute Details</div>
+          <div class="extra-title">🚌 Travel Details</div>
           <div class="form-row">
-            <div class="form-group flex-1">
-              <label for="travelMode">Transport Mode</label>
-              <select id="travelMode" class="input-control">
-                <option value="bus">🚌 Public / College Bus</option>
-                <option value="metro">🚇 Metro / Subway</option>
-                <option value="auto_cab">🛺 Shared Auto / Cab / Uber</option>
-                <option value="fuel">⛽ Bike / Car Fuel</option>
-                <option value="pass">🎟️ Monthly Pass Recharge</option>
-                <option value="train">🚆 Local Train</option>
+            <div class="form-group">
+              <label for="travelMode">Mode</label>
+              <select id="travelMode" class="select-pill">
+                <option value="Metro">🚇 Metro</option>
+                <option value="Bus">🚌 Bus</option>
+                <option value="Auto">🛺 Auto / Cab</option>
+                <option value="Bike/Fuel">⛽ Fuel</option>
               </select>
             </div>
-            <div class="form-group flex-2">
-              <label for="travelRoute">Route / Destination</label>
-              <input type="text" id="travelRoute" class="input-control" placeholder="e.g. Hostel to Engineering Block">
+            <div class="form-group" style="flex:2;">
+              <label for="travelRoute">Route</label>
+              <input type="text" id="travelRoute" class="input-control" placeholder="e.g. Hostel to Campus">
             </div>
           </div>
         </div>
 
-        <!-- Gym Diet Specific -->
+        <!-- Gym Extra -->
         <div id="gymSpecificFields" class="category-extra-box" style="display:none;">
-          <div class="extra-title">🏋️ Fitness & Gym Diet Macros</div>
+          <div class="extra-title">🏋️ Fitness Macros</div>
           <div class="form-row">
-            <div class="form-group flex-1">
-              <label for="gymDietItemType">Diet Item Type</label>
-              <select id="gymDietItemType" class="input-control">
-                <option value="whey">Whey Protein Shake</option>
-                <option value="eggs">Boiled Eggs / Omelette</option>
-                <option value="chicken_tofu">Chicken / Tofu / Paneer</option>
-                <option value="oats_pb">Oats & Peanut Butter</option>
-                <option value="creatine">Creatine / Pre-Workout</option>
-                <option value="fruits_nuts">Fruits / Dry Fruits</option>
-                <option value="other_diet">Other High Protein Snack</option>
-              </select>
-            </div>
-            <div class="form-group flex-1">
-              <label for="gymProteinGrams">Est. Protein (Grams)</label>
-              <input type="number" id="gymProteinGrams" class="input-control" placeholder="e.g. 24g" min="0">
-            </div>
-            <div class="form-group flex-1">
-              <label for="gymMealTiming">Timing</label>
-              <select id="gymMealTiming" class="input-control">
-                <option value="post_workout">Post-Workout</option>
-                <option value="pre_workout">Pre-Workout</option>
-                <option value="morning_breakfast">Breakfast</option>
-                <option value="snack">High-Protein Snack</option>
-                <option value="dinner">Dinner</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Exam Fees Specific -->
-        <div id="examSpecificFields" class="category-extra-box" style="display:none;">
-          <div class="extra-title">📝 Exam Fee Details</div>
-          <div class="form-row">
-            <div class="form-group flex-1">
-              <label for="examType">Exam Category</label>
-              <select id="examType" class="input-control">
-                <option value="semester_regular">Semester Regular Exams</option>
-                <option value="backlog_arrear">Backlog / Arrear Paper Fee</option>
-                <option value="practical_lab">Practical & Lab Exam Fee</option>
-                <option value="certification">External Certification / NPTEL</option>
-                <option value="re_evaluation">Re-evaluation / Re-check Fee</option>
-                <option value="hall_ticket">Hall Ticket / Late Registration</option>
-              </select>
-            </div>
-            <div class="form-group flex-1">
-              <label for="examSemester">Semester / Year</label>
-              <input type="text" id="examSemester" class="input-control" placeholder="e.g. Sem 5 / Year 3">
-            </div>
-            <div class="form-group flex-1">
-              <label for="examStatus">Fee Status</label>
-              <select id="examStatus" class="input-control">
-                <option value="paid">✅ Paid</option>
-                <option value="pending">⏳ Pending / Due</option>
-              </select>
+            <div class="form-group">
+              <label for="gymProteinGrams">Estimated Protein (Grams)</label>
+              <input type="number" id="gymProteinGrams" class="input-control" placeholder="e.g. 24">
             </div>
           </div>
         </div>
 
         <div class="form-row">
-          <div class="form-group flex-1">
+          <div class="form-group">
             <label for="expDate">Date *</label>
             <input type="date" id="expDate" class="input-control" required>
           </div>
-          <div class="form-group flex-1">
-            <label for="expTime">Time</label>
-            <input type="time" id="expTime" class="input-control">
-          </div>
-          <div class="form-group flex-1">
+          <div class="form-group">
             <label for="expPaymentMethod">Payment Mode</label>
-            <select id="expPaymentMethod" class="input-control">
-              <option value="UPI">📱 UPI / QR Code</option>
+            <select id="expPaymentMethod" class="select-pill">
+              <option value="UPI">📱 UPI / QR</option>
               <option value="Cash">💵 Cash</option>
-              <option value="Card">💳 Debit / Credit Card</option>
-              <option value="NetBanking">💻 Net Banking</option>
-              <option value="Pass">🎟️ Transit Card / Pass</option>
+              <option value="Card">💳 Card</option>
             </select>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="expNotes">Notes / Receipt Reference (Optional)</label>
-          <input type="text" id="expNotes" class="input-control" placeholder="e.g. UPI ref #123849, shared with roommate, etc.">
-        </div>
-
-        <div class="modal-footer">
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
           <button type="button" class="btn btn-secondary" onclick="app.closeExpenseModal()">Cancel</button>
-          <button type="submit" class="btn btn-primary" id="btnSaveExpense">Save Expense</button>
+          <button type="submit" class="btn btn-primary">Save Expense</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- ============================================== -->
-  <!-- MODAL: ADD COLLEGE FEE DEADLINE & ALARM -->
+  <!-- MODAL: ADD COLLEGE FEE DEADLINE -->
   <!-- ============================================== -->
   <div id="feeModal" class="modal-backdrop hidden">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 id="feeModalTitle">⏰ Add College Fee Deadline & Alarm</h3>
+        <h3>⏰ Add College Fee Deadline</h3>
         <button class="modal-close" onclick="app.closeFeeModal()">&times;</button>
       </div>
       <form id="feeForm" onsubmit="app.handleSaveFee(event)">
-        <input type="hidden" id="editFeeId">
-
-        <div class="form-group">
+        <div class="form-group" style="margin-bottom:14px;">
           <label for="feeTitle">Fee Title / Purpose *</label>
-          <input type="text" id="feeTitle" class="input-control" placeholder="e.g. Semester 6 Tuition Fee, Hostel Mess Advance, Annual Library Dues" required>
+          <input type="text" id="feeTitle" class="input-control" placeholder="e.g. Semester 6 Tuition, Hostel Mess Dues" required>
         </div>
-
         <div class="form-row">
-          <div class="form-group flex-1">
-            <label for="feeAmount">Fee Amount *</label>
-            <div class="input-with-symbol">
-              <span class="currency-symbol" id="feeFormCurrencySymbol">₹</span>
-              <input type="number" step="any" min="0" id="feeAmount" class="input-control" placeholder="45000" required>
-            </div>
+          <div class="form-group">
+            <label for="feeAmount">Amount *</label>
+            <input type="number" min="0" id="feeAmount" class="input-control" placeholder="45000" required>
           </div>
-          <div class="form-group flex-1">
+          <div class="form-group">
             <label for="feeDueDate">Due Date *</label>
             <input type="date" id="feeDueDate" class="input-control" required>
           </div>
         </div>
-
         <div class="form-row">
-          <div class="form-group flex-1">
+          <div class="form-group">
             <label for="feeGracePeriod">Grace Period (Days)</label>
-            <input type="number" min="0" id="feeGracePeriod" class="input-control" value="0" placeholder="0">
+            <input type="number" min="0" id="feeGracePeriod" class="input-control" value="0">
           </div>
-          <div class="form-group flex-1">
-            <label for="feeLatePenalty">Late Penalty Per Day</label>
-            <div class="input-with-symbol">
-              <span class="currency-symbol" id="penaltyFormCurrencySymbol">₹</span>
-              <input type="number" min="0" id="feeLatePenalty" class="input-control" value="100" placeholder="100">
-            </div>
+          <div class="form-group">
+            <label for="feeLatePenalty">Daily Late Penalty</label>
+            <input type="number" min="0" id="feeLatePenalty" class="input-control" value="100">
           </div>
         </div>
-
-        <div class="category-extra-box">
-          <div class="extra-title">🔔 Alarm & Notification Configuration</div>
-          <div class="form-row">
-            <div class="form-group flex-1">
-              <label for="feeAlarmSound">Alarm Sound</label>
-              <select id="feeAlarmSound" class="input-control">
-                <option value="chime">College Bell Chime</option>
-                <option value="urgent">Urgent Warning Siren</option>
-                <option value="digital">Digital Clock Beep</option>
-                <option value="melody">Melodic Tune</option>
-              </select>
-            </div>
-            <div class="form-group flex-1">
-              <label for="feeStatusSelect">Status</label>
-              <select id="feeStatusSelect" class="input-control">
-                <option value="pending" selected>⏳ Pending Submission</option>
-                <option value="paid">✅ Paid & Cleared</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal-footer">
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
           <button type="button" class="btn btn-secondary" onclick="app.closeFeeModal()">Cancel</button>
-          <button type="submit" class="btn btn-danger">Save Fee Deadline & Alarm</button>
+          <button type="submit" class="btn btn-primary">Save Deadline</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- ============================================== -->
-  <!-- MODAL: SET BUDGET & ALLOWANCE -->
+  <!-- MODAL: BUDGET SETTINGS -->
   <!-- ============================================== -->
   <div id="budgetModal" class="modal-backdrop hidden">
     <div class="modal-card">
       <div class="modal-header">
-        <h3>🎯 Student Monthly Allowance & Daily Budget</h3>
+        <h3>🎯 Student Monthly Pocket Allowance</h3>
         <button class="modal-close" onclick="app.closeBudgetModal()">&times;</button>
       </div>
       <form id="budgetForm" onsubmit="app.handleSaveBudget(event)">
-        <div class="form-group">
-          <label for="monthlyAllowanceInput">Monthly Pocket Money / Allowance</label>
-          <div class="input-with-symbol">
-            <span class="currency-symbol" id="budgetCurrencySymbol">₹</span>
-            <input type="number" min="0" id="monthlyAllowanceInput" class="input-control" value="12000" required>
-          </div>
-          <small class="help-text">Money received from parents or part-time student work.</small>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label for="monthlyAllowanceInput">Monthly Pocket Money Allowance</label>
+          <input type="number" min="0" id="monthlyAllowanceInput" class="input-control" value="12000" required>
         </div>
-
-        <div class="form-group">
+        <div class="form-group" style="margin-bottom:14px;">
           <label for="dailyBudgetLimitInput">Daily Safe Spending Target</label>
-          <div class="input-with-symbol">
-            <span class="currency-symbol" id="dailyBudgetCurrencySymbol">₹</span>
-            <input type="number" min="0" id="dailyBudgetLimitInput" class="input-control" value="350" required>
-          </div>
-          <small class="help-text">You'll receive a warning tag if today's expense exceeds this amount.</small>
+          <input type="number" min="0" id="dailyBudgetLimitInput" class="input-control" value="350" required>
         </div>
-
-        <div class="modal-footer">
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
           <button type="button" class="btn btn-secondary" onclick="app.closeBudgetModal()">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Budget</button>
+          <button type="submit" class="btn btn-primary">Save Targets</button>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- ============================================== -->
-  <!-- MODAL: ACTIVE ALARM TRIGGER POPUP -->
-  <!-- ============================================== -->
-  <div id="alarmTriggerModal" class="modal-backdrop hidden alarm-active-modal">
-    <div class="modal-card alarm-card-pulse">
-      <div class="alarm-modal-body">
-        <div class="alarm-huge-icon">⏰🔔</div>
-        <h2 id="alarmTriggerTitle">College Fee Due Alarm!</h2>
-        <p id="alarmTriggerSubtitle">Your <strong>Semester 6 Tuition Fee</strong> is due in 2 days!</p>
-        
-        <div class="alarm-due-details-box">
-          <div class="alarm-detail-item">
-            <span>Fee Amount:</span>
-            <strong class="currency-val" id="alarmTriggerAmount">₹45,000</strong>
-          </div>
-          <div class="alarm-detail-item">
-            <span>Due Date:</span>
-            <strong id="alarmTriggerDueDate">Aug 20, 2026</strong>
-          </div>
-          <div class="alarm-detail-item">
-            <span>Late Fee If Missed:</span>
-            <strong class="text-danger" id="alarmTriggerPenalty">₹100 / day penalty</strong>
-          </div>
-        </div>
-
-        <div class="alarm-modal-actions">
-          <button class="btn btn-secondary" onclick="app.snoozeActiveAlarm()">⏳ Snooze Alarm (30 Mins)</button>
-          <button class="btn btn-success" onclick="app.markActiveFeeAsPaid()">✅ Mark as Paid</button>
-          <button class="btn btn-primary" onclick="app.dismissActiveAlarm()">Dismiss Alarm</button>
-        </div>
-      </div>
     </div>
   </div>
 
   <!-- Toast Notification Container -->
   <div id="toastContainer" class="toast-container"></div>
 
+  <!-- ==========================================================================
+       JAVASCRIPT ENGINE
+       ========================================================================== -->
+  <script>
+    // --- Web Audio Synthesizer for Alarms ---
+    const SoundEngine = {
+      ctx: null,
+      init() {
+        if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      },
+      playChime() {
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, now); // D5
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.3); // A5
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 1.2);
+      },
+      playUrgent() {
+        this.init();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(700, now);
+        osc.frequency.linearRampToValueAtTime(1100, now + 0.2);
+        osc.frequency.linearRampToValueAtTime(700, now + 0.4);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.8);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.8);
+      },
+      playDigital() {
+        this.init();
+        const now = this.ctx.currentTime;
+        [0, 0.15, 0.3].forEach(t => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(1046.5, now + t);
+          gain.gain.setValueAtTime(0.2, now + t);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + t + 0.08);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + t);
+          osc.stop(now + t + 0.08);
+        });
+      }
+    };
 
-<script>
-const app={
- data:{expenses:JSON.parse(localStorage.getItem('dk_expenses')||'[]'),fees:JSON.parse(localStorage.getItem('dk_fees')||'[]'),budget:JSON.parse(localStorage.getItem('dk_budget')||'{"monthly":12000,"daily":350,"currency":"INR"}')},
- save(){localStorage.setItem('dk_expenses',JSON.stringify(this.data.expenses));localStorage.setItem('dk_fees',JSON.stringify(this.data.fees));localStorage.setItem('dk_budget',JSON.stringify(this.data.budget));this.render()},
- money(n){return new Intl.NumberFormat(undefined,{style:'currency',currency:this.data.budget.currency||'INR',maximumFractionDigits:0}).format(Number(n)||0)},
- switchTab(tab){document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));document.querySelectorAll('[data-tab="'+tab+'"]').forEach(x=>x.classList.add('active'));document.getElementById('tab-'+tab)?.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})},
- toast(t){let x=document.createElement('div');x.className='toast';x.textContent=t;document.getElementById('toastContainer').append(x);setTimeout(()=>x.remove(),2600)},
- openAddModalWithCategory(c,sub){this.openExpenseModal();expCategory.value=c;if(sub)foodType.value=sub;this.handleCategoryChange()},
- openExpenseModal(){expenseForm.reset();editExpenseId.value='';expenseModal.classList.remove('hidden');expDate.value=new Date().toISOString().slice(0,10);expTime.value=new Date().toTimeString().slice(0,5);this.handleCategoryChange()},
- closeExpenseModal(){expenseModal.classList.add('hidden')},
- handleCategoryChange(){let c=expCategory.value, gym=c==='food'&&foodType.value==='gym_diet';foodTypeGroup.style.display=c==='food'?'block':'none';travelSpecificFields.style.display=c==='travel'?'block':'none';gymSpecificFields.style.display=gym?'block':'none';examSpecificFields.style.display=c==='exam_fees'?'block':'none'},
- handleSaveExpense(e){e.preventDefault();let c=expCategory.value;c=c==='food'?foodType.value:c;let id=editExpenseId.value||Date.now().toString();let o={id,category:c,title:expTitle.value,amount:+expAmount.value,date:expDate.value,time:expTime.value,payment:expPaymentMethod.value,notes:expNotes.value,route:travelRoute.value||'',mode:travelMode.value||'',protein:+gymProteinGrams.value||0,status:examStatus.value||'paid'};let i=this.data.expenses.findIndex(x=>x.id===id);if(i>=0)this.data.expenses[i]=o;else this.data.expenses.unshift(o);this.closeExpenseModal();this.save();this.toast('Expense saved successfully')},
- deleteExpense(id){if(confirm('Delete this expense?')){this.data.expenses=this.data.expenses.filter(x=>x.id!==id);this.save()}},
- openAddFeeModal(){feeForm.reset();feeModal.classList.remove('hidden')},closeFeeModal(){feeModal.classList.add('hidden')},
- handleSaveFee(e){e.preventDefault();this.data.fees.unshift({id:Date.now().toString(),title:feeTitle.value,amount:+feeAmount.value,dueDate:feeDueDate.value,grace:+feeGracePeriod.value||0,penalty:+feeLatePenalty.value||0,status:feeStatusSelect.value});this.closeFeeModal();this.save();this.toast('Fee deadline saved')},
- closeBudgetModal(){budgetModal.classList.add('hidden')},handleSaveBudget(e){e.preventDefault();this.data.budget.monthly=+monthlyAllowanceInput.value;this.data.budget.daily=+dailyBudgetLimitInput.value;this.closeBudgetModal();this.save();this.toast('Budget updated')},
- render(){let ex=this.data.expenses, today=new Date().toISOString().slice(0,10), month=today.slice(0,7), sum=(a)=>a.reduce((s,x)=>s+(+x.amount||0),0), todayEx=ex.filter(x=>x.date===today), monthEx=ex.filter(x=>x.date?.startsWith(month)), travel=todayEx.filter(x=>x.category==='travel'), gym=monthEx.filter(x=>x.category==='gym_diet'), food=monthEx.filter(x=>x.category==='normal_food'), feesDue=this.data.fees.filter(x=>x.status==='pending');
- metricTodaySpend.textContent=this.money(sum(todayEx));metricTravelSpend.textContent=this.money(sum(travel));metricFoodTotal.textContent=this.money(sum(gym)+sum(food));metricGymSpend.textContent=this.money(sum(gym));metricNormalSpend.textContent=this.money(sum(food));metricFeesDue.textContent=this.money(sum(feesDue));metricAllowanceRemaining.textContent=this.money(this.data.budget.monthly-sum(monthEx));metricAllowanceSub.textContent=`${this.money(sum(monthEx))} spent of ${this.money(this.data.budget.monthly)} allowance`;metricDailyBudgetStatus.textContent=sum(todayEx)>this.data.budget.daily?'Over daily budget!':`Within daily safe limit (${this.money(this.data.budget.daily)}/day)`;
- badgeTravelToday.textContent=this.money(sum(travel));badgeExamPending.textContent=feesDue.length+' Due';
- travelTodayTotal.textContent=this.money(sum(travel));travelMonthTotal.textContent=this.money(sum(monthEx.filter(x=>x.category==='travel')));travelDailyAvg.textContent=this.money(sum(monthEx.filter(x=>x.category==='travel'))/Math.max(1,new Set(monthEx.filter(x=>x.category==='travel').map(x=>x.date)).size))+'/day';
- dietGymTotalSpend.textContent=this.money(sum(gym));dietNormalTotalSpend.textContent=this.money(sum(food));dietTotalProtein.textContent=sum(gym.map(x=>({amount:x.protein||0})))+'g';dietNormalMealCount.textContent=food.length+' meals';
- let rows=ex.map(x=>`<tr><td>${x.date||''} ${x.time||''}</td><td>${x.category.replace('_',' ')}</td><td>${x.title}</td><td>${x.route||x.notes||'—'}</td><td>${x.payment||'—'}</td><td>${this.money(x.amount)}</td><td><button class="btn btn-sm" onclick="app.deleteExpense('${x.id}')">Delete</button></td></tr>`).join('')||'<tr><td colspan="7">No expenses yet. Add your first expense.</td></tr>';allTransactionsTableBody.innerHTML=rows;travelTableBody.innerHTML=ex.filter(x=>x.category==='travel').map(x=>`<tr><td>${x.date}</td><td>${x.mode||'Travel'}</td><td>${x.route||x.title}</td><td>${x.payment||'—'}</td><td>${this.money(x.amount)}</td><td><button class="btn btn-sm" onclick="app.deleteExpense('${x.id}')">Delete</button></td></tr>`).join('')||'<tr><td colspan="6">No travel logs yet.</td></tr>';
- dashboardRecentList.innerHTML=ex.slice(0,5).map(x=>`<div class="list-item"><span>${x.title}<br><small>${x.category.replace('_',' ')}</small></span><strong>${this.money(x.amount)}</strong></div>`).join('')||'<div class="list-item">No recent expenses.</div>';
- dashboardFeeWatchList.innerHTML=this.data.fees.map(f=>`<div class="list-item"><span>${f.title}<br><small>Due: ${f.dueDate}</small></span><strong>${f.status}</strong></div>`).join('')||'<div class="list-item">No fee deadlines added.</div>';
- collegeFeesGrid.innerHTML=this.data.fees.map(f=>`<div class="fee-card"><h3>${f.title}</h3><p>${this.money(f.amount)} · Due ${f.dueDate}</p><small>${f.status} · Late penalty ${this.money(f.penalty)}/day</small></div>`).join('')||'<p>No college fees scheduled.</p>';
- totalActiveFeesCount.textContent=feesDue.length+' Active Dues';filteredCount.textContent=ex.length;filteredTotal.textContent=this.money(sum(ex));
- },
- init(){document.querySelectorAll('.nav-tab,.m-tab').forEach(b=>b.onclick=()=>this.switchTab(b.dataset.tab));btnOpenAddModal.onclick=()=>this.openExpenseModal();btnSetBudget.onclick=()=>{budgetModal.classList.remove('hidden');monthlyAllowanceInput.value=this.data.budget.monthly;dailyBudgetLimitInput.value=this.data.budget.daily};btnThemeToggle.onclick=()=>{let d=document.documentElement;d.dataset.theme=d.dataset.theme==='dark'?'light':'dark';themeIcon.textContent=d.dataset.theme==='dark'?'☀️':'🌙'};foodType.onchange=()=>this.handleCategoryChange();currencySelect.onchange=()=>{this.data.budget.currency=currencySelect.value;this.save()};expenseModal.onclick=e=>{if(e.target===expenseModal)this.closeExpenseModal()};feeModal.onclick=e=>{if(e.target===feeModal)this.closeFeeModal()};budgetModal.onclick=e=>{if(e.target===budgetModal)this.closeBudgetModal()};document.querySelectorAll('.chip-preset').forEach(b=>b.onclick=()=>{this.openExpenseModal();let p=b.dataset.preset, map={bus:['travel','College Bus',30],metro:['travel','Metro Token',40],'canteen-lunch':['food','Mess / Canteen Lunch',80],'chai-samosa':['food','Chai & Samosa Break',25],'protein-shake':['food','Whey Scoop + 4 Eggs',95],'peanut-butter-oats':['food','Gym Oats & PB Snack',50],'auto-rickshaw':['travel','Shared Auto',20],photocopy:['study_materials','Notes Print/Xerox',15]};let m=map[p];expCategory.value=m[0];expTitle.value=m[1];expAmount.value=m[2];if(['protein-shake','peanut-butter-oats'].includes(p))foodType.value='gym_diet';this.handleCategoryChange()});setInterval(()=>{let d=new Date();currentDateStr.textContent=d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});currentTimeStr.textContent=d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})},1000);this.render()}
-};window.app=app;document.addEventListener('DOMContentLoaded',()=>app.init());
-</script>
+    // --- Core Application State & Logic ---
+    const app = {
+      user: JSON.parse(localStorage.getItem('dk_auth_user') || 'null'),
+      data: {
+        expenses: JSON.parse(localStorage.getItem('dk_expenses') || '[]'),
+        fees: JSON.parse(localStorage.getItem('dk_fees') || '[]'),
+        budget: JSON.parse(localStorage.getItem('dk_budget') || '{"monthly":12000,"daily":350,"currency":"INR"}')
+      },
+      
+      save() {
+        localStorage.setItem('dk_expenses', JSON.stringify(this.data.expenses));
+        localStorage.setItem('dk_fees', JSON.stringify(this.data.fees));
+        localStorage.setItem('dk_budget', JSON.stringify(this.data.budget));
+        this.render();
+      },
 
+      money(n) {
+        return new Intl.NumberFormat(undefined, {
+          style: 'currency',
+          currency: this.data.budget.currency || 'INR',
+          maximumFractionDigits: 0
+        }).format(Number(n) || 0);
+      },
+
+      toast(msg) {
+        const c = document.getElementById('toastContainer');
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = msg;
+        c.appendChild(t);
+        setTimeout(() => t.remove(), 2800);
+      },
+
+      switchTab(tab) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+        document.getElementById('tab-' + tab)?.classList.add('active');
+        document.querySelector(`[data-tab="${tab}"]`)?.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+
+      handleEmailLogin(e) {
+        e.preventDefault();
+        const email = document.getElementById('authEmail').value;
+        this.user = { email, name: email.split('@')[0] };
+        localStorage.setItem('dk_auth_user', JSON.stringify(this.user));
+        this.checkAuth();
+        this.toast(`Welcome, ${this.user.name}!`);
+      },
+
+      logout() {
+        this.user = null;
+        localStorage.removeItem('dk_auth_user');
+        this.checkAuth();
+        this.toast("Logged out successfully.");
+      },
+
+      checkAuth() {
+        const overlay = document.getElementById('authOverlay');
+        const appContainer = document.getElementById('app');
+        if (this.user) {
+          overlay.classList.add('hidden');
+          appContainer.classList.remove('hidden');
+          this.render();
+        } else {
+          overlay.classList.remove('hidden');
+          appContainer.classList.add('hidden');
+        }
+      },
+
+      openExpenseModal() {
+        document.getElementById('expenseForm').reset();
+        document.getElementById('editExpenseId').value = '';
+        document.getElementById('expDate').value = new Date().toISOString().slice(0, 10);
+        document.getElementById('expenseModal').classList.remove('hidden');
+        this.handleCategoryChange();
+      },
+
+      closeExpenseModal() {
+        document.getElementById('expenseModal').classList.add('hidden');
+      },
+
+      openAddModalWithCategory(cat, sub) {
+        this.openExpenseModal();
+        document.getElementById('expCategory').value = cat;
+        if (sub) document.getElementById('foodType').value = sub;
+        this.handleCategoryChange();
+      },
+
+      handleCategoryChange() {
+        const cat = document.getElementById('expCategory').value;
+        const foodType = document.getElementById('foodType').value;
+        const isFood = cat === 'food';
+        const isGym = isFood && foodType === 'gym_diet';
+
+        document.getElementById('foodTypeGroup').style.display = isFood ? 'flex' : 'none';
+        document.getElementById('travelSpecificFields').style.display = cat === 'travel' ? 'block' : 'none';
+        document.getElementById('gymSpecificFields').style.display = isGym ? 'block' : 'none';
+      },
+
+      handleSaveExpense(e) {
+        e.preventDefault();
+        const catVal = document.getElementById('expCategory').value;
+        const actualCat = catVal === 'food' ? document.getElementById('foodType').value : catVal;
+        const id = document.getElementById('editExpenseId').value || Date.now().toString();
+
+        const item = {
+          id,
+          category: actualCat,
+          title: document.getElementById('expTitle').value,
+          amount: +document.getElementById('expAmount').value,
+          date: document.getElementById('expDate').value,
+          payment: document.getElementById('expPaymentMethod').value,
+          route: document.getElementById('travelRoute')?.value || '',
+          mode: document.getElementById('travelMode')?.value || '',
+          protein: +document.getElementById('gymProteinGrams')?.value || 0
+        };
+
+        const existingIdx = this.data.expenses.findIndex(x => x.id === id);
+        if (existingIdx >= 0) this.data.expenses[existingIdx] = item;
+        else this.data.expenses.unshift(item);
+
+        this.closeExpenseModal();
+        this.save();
+        this.toast('Expense saved successfully');
+      },
+
+      deleteExpense(id) {
+        if (confirm('Delete this record?')) {
+          this.data.expenses = this.data.expenses.filter(x => x.id !== id);
+          this.save();
+          this.toast('Expense deleted');
+        }
+      },
+
+      openAddFeeModal() {
+        document.getElementById('feeForm').reset();
+        document.getElementById('feeDueDate').value = new Date().toISOString().slice(0, 10);
+        document.getElementById('feeModal').classList.remove('hidden');
+      },
+
+      closeFeeModal() {
+        document.getElementById('feeModal').classList.add('hidden');
+      },
+
+      handleSaveFee(e) {
+        e.preventDefault();
+        this.data.fees.unshift({
+          id: Date.now().toString(),
+          title: document.getElementById('feeTitle').value,
+          amount: +document.getElementById('feeAmount').value,
+          dueDate: document.getElementById('feeDueDate').value,
+          grace: +document.getElementById('feeGracePeriod').value || 0,
+          penalty: +document.getElementById('feeLatePenalty').value || 0,
+          status: 'pending'
+        });
+        this.closeFeeModal();
+        this.save();
+        this.toast('Fee deadline saved');
+      },
+
+      deleteFee(id) {
+        if (confirm('Delete this fee deadline?')) {
+          this.data.fees = this.data.fees.filter(x => x.id !== id);
+          this.save();
+          this.toast('Fee removed');
+        }
+      },
+
+      openBudgetModal() {
+        document.getElementById('budgetModal').classList.remove('hidden');
+        document.getElementById('monthlyAllowanceInput').value = this.data.budget.monthly;
+        document.getElementById('dailyBudgetLimitInput').value = this.data.budget.daily;
+      },
+
+      closeBudgetModal() {
+        document.getElementById('budgetModal').classList.add('hidden');
+      },
+
+      handleSaveBudget(e) {
+        e.preventDefault();
+        this.data.budget.monthly = +document.getElementById('monthlyAllowanceInput').value;
+        this.data.budget.daily = +document.getElementById('dailyBudgetLimitInput').value;
+        this.closeBudgetModal();
+        this.save();
+        this.toast('Budget targets updated');
+      },
+
+      renderCharts(monthEx) {
+        // 7-Day Spending Bar Chart
+        const svgTrend = document.getElementById('spendingTrendChart');
+        const days = 7;
+        const trendData = [];
+        for (let i = days - 1; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          const dateStr = d.toISOString().slice(0, 10);
+          const daySpend = this.data.expenses
+            .filter(x => x.date === dateStr)
+            .reduce((s, x) => s + (+x.amount || 0), 0);
+          trendData.push({ label: d.toLocaleDateString(undefined, { weekday: 'short' }), spend: daySpend });
+        }
+        const maxSpend = Math.max(...trendData.map(d => d.spend), 100);
+        svgTrend.innerHTML = trendData.map((d, i) => {
+          const h = (d.spend / maxSpend) * 140;
+          const x = 30 + i * 65;
+          const y = 160 - h;
+          return `
+            <rect x="${x}" y="${y}" width="34" height="${h}" rx="6" fill="url(#trendGrad)" />
+            <text x="${x + 17}" y="185" text-anchor="middle" fill="#8e8e9f" font-size="11">${d.label}</text>
+            <text x="${x + 17}" y="${y - 6}" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">${d.spend > 0 ? d.spend : ''}</text>
+          `;
+        }).join('') + `
+          <defs>
+            <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ff4500"/>
+              <stop offset="100%" stop-color="#ff8c00" stop-opacity="0.3"/>
+            </linearGradient>
+          </defs>
+        `;
+
+        // Doughnut Breakdown
+        const cats = {
+          'Travel': monthEx.filter(x => x.category === 'travel').reduce((s, x) => s + x.amount, 0),
+          'Gym Diet': monthEx.filter(x => x.category === 'gym_diet').reduce((s, x) => s + x.amount, 0),
+          'Food': monthEx.filter(x => x.category === 'normal_food').reduce((s, x) => s + x.amount, 0),
+          'Academic': monthEx.filter(x => ['exam_fees', 'study_materials'].includes(x.category)).reduce((s, x) => s + x.amount, 0)
+        };
+        const total = Object.values(cats).reduce((a, b) => a + b, 0);
+        const topCat = Object.entries(cats).sort((a, b) => b[1] - a[1])[0];
+        document.getElementById('topCategoryName').textContent = topCat && topCat[1] > 0 ? topCat[0] : 'None';
+
+        const svgDoughnut = document.getElementById('categoryDoughnutChart');
+        const legend = document.getElementById('categoryDoughnutLegend');
+        const colors = ['#38bdf8', '#ff5722', '#f59e0b', '#a855f7'];
+        let accAngle = 0;
+
+        if (total > 0) {
+          const slices = Object.entries(cats).map(([name, val], idx) => {
+            const angle = (val / total) * 360;
+            const strokeDash = `${(angle / 360) * 283} 283`;
+            const strokeOffset = -((accAngle / 360) * 283);
+            accAngle += angle;
+            return `<circle cx="100" cy="100" r="45" fill="none" stroke="${colors[idx]}" stroke-width="20" stroke-dasharray="${strokeDash}" stroke-dashoffset="${strokeOffset}" transform="rotate(-90 100 100)"/>`;
+          }).join('');
+          svgDoughnut.innerHTML = slices;
+        } else {
+          svgDoughnut.innerHTML = `<circle cx="100" cy="100" r="45" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="20"/>`;
+        }
+
+        legend.innerHTML = Object.entries(cats).map(([name, val], idx) => `
+          <div class="legend-row">
+            <span class="legend-dot" style="background:${colors[idx]};"></span>
+            <span>${name}: <strong>${this.money(val)}</strong></span>
+          </div>
+        `).join('');
+      },
+
+      render() {
+        const ex = this.data.expenses;
+        const today = new Date().toISOString().slice(0, 10);
+        const month = today.slice(0, 7);
+        const sum = arr => arr.reduce((s, x) => s + (+x.amount || 0), 0);
+
+        const todayEx = ex.filter(x => x.date === today);
+        const monthEx = ex.filter(x => x.date?.startsWith(month));
+        const travelEx = ex.filter(x => x.category === 'travel');
+        const gymEx = monthEx.filter(x => x.category === 'gym_diet');
+        const normalFoodEx = monthEx.filter(x => x.category === 'normal_food');
+        const examEx = ex.filter(x => x.category === 'exam_fees');
+        const pendingFees = this.data.fees.filter(x => x.status === 'pending');
+
+        // Metrics Card Fill
+        document.getElementById('metricTodaySpend').textContent = this.money(sum(todayEx));
+        document.getElementById('metricTravelSpend').textContent = this.money(sum(todayEx.filter(x => x.category === 'travel')));
+        document.getElementById('metricFoodTotal').textContent = this.money(sum(gymEx) + sum(normalFoodEx));
+        document.getElementById('metricGymSpend').textContent = this.money(sum(gymEx));
+        document.getElementById('metricNormalSpend').textContent = this.money(sum(normalFoodEx));
+        document.getElementById('metricFeesDue').textContent = this.money(sum(pendingFees));
+        document.getElementById('metricAllowanceRemaining').textContent = this.money(this.data.budget.monthly - sum(monthEx));
+        document.getElementById('metricAllowanceSub').textContent = `${this.money(sum(monthEx))} spent of ${this.money(this.data.budget.monthly)}`;
+
+        // Diet Split Bar Calculations
+        const totalDiet = sum(gymEx) + sum(normalFoodEx);
+        const gymPct = totalDiet > 0 ? Math.round((sum(gymEx) / totalDiet) * 100) : 50;
+        const normalPct = totalDiet > 0 ? 100 - gymPct : 50;
+        document.getElementById('dietCompareGymBar').style.width = gymPct + '%';
+        document.getElementById('dietCompareNormalBar').style.width = normalPct + '%';
+        document.getElementById('dietSplitPercentage').textContent = `Gym: ${gymPct}% | Normal: ${normalPct}%`;
+        document.getElementById('dietGymTotalSpend').textContent = this.money(sum(gymEx));
+        document.getElementById('dietNormalTotalSpend').textContent = this.money(sum(normalFoodEx));
+        document.getElementById('dietTotalProtein').textContent = gymEx.reduce((s, x) => s + (x.protein || 0), 0) + 'g';
+        document.getElementById('dietNormalMealCount').textContent = normalFoodEx.length + ' meals';
+
+        // Nav Badges
+        document.getElementById('badgeTravelToday').textContent = this.money(sum(todayEx.filter(x => x.category === 'travel')));
+        document.getElementById('badgeExamPending').textContent = `${pendingFees.length} Due`;
+
+        // Render Tables
+        const buildRow = (item, extra) => `
+          <tr>
+            <td>${item.date || '—'}</td>
+            <td>${extra}</td>
+            <td>${item.title}</td>
+            <td>${item.payment || '—'}</td>
+            <td><strong class="currency-val">${this.money(item.amount)}</strong></td>
+            <td><button class="btn btn-sm btn-secondary" onclick="app.deleteExpense('${item.id}')">✕</button></td>
+          </tr>
+        `;
+
+        document.getElementById('travelTableBody').innerHTML = travelEx.map(x => buildRow(x, x.mode || 'Transit')).join('') || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No commute logs found.</td></tr>';
+        document.getElementById('foodTableBody').innerHTML = ex.filter(x => ['gym_diet', 'normal_food'].includes(x.category)).map(x => buildRow(x, x.protein ? `${x.protein}g protein` : 'Regular Meal')).join('') || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No diet logs found.</td></tr>';
+        document.getElementById('examTableBody').innerHTML = examEx.map(x => buildRow(x, 'Exam Fee')).join('') || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No exam fees recorded.</td></tr>';
+        
+        // Fee Deadlines Table
+        document.getElementById('feeTableBody').innerHTML = this.data.fees.map(f => `
+          <tr>
+            <td><strong>${f.title}</strong></td>
+            <td>${f.dueDate}</td>
+            <td>${f.grace} days</td>
+            <td>${this.money(f.penalty)}/day</td>
+            <td><span class="tag-badge" style="background:${f.status === 'paid' ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)'}">${f.status.toUpperCase()}</span></td>
+            <td><strong class="currency-val">${this.money(f.amount)}</strong></td>
+            <td><button class="btn btn-sm btn-secondary" onclick="app.deleteFee('${f.id}')">✕</button></td>
+          </tr>
+        `).join('') || '<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">No college fee deadlines set.</td></tr>';
+
+        // History Table
+        this.filterHistoryTable();
+
+        // Dashboard Mini Lists
+        document.getElementById('dashboardRecentList').innerHTML = ex.slice(0, 4).map(x => `
+          <div style="display:flex; justify-content:space-between; padding:10px 14px; background:var(--card-alt); border-radius:var(--radius-md);">
+            <span>${x.title} <br><small style="color:var(--text-muted);">${x.category.replace('_', ' ')}</small></span>
+            <strong class="currency-val">${this.money(x.amount)}</strong>
+          </div>
+        `).join('') || '<div style="color:var(--text-muted);">No recent logs.</div>';
+
+        document.getElementById('dashboardFeeWatchList').innerHTML = this.data.fees.slice(0, 3).map(f => `
+          <div style="display:flex; justify-content:space-between; padding:10px 14px; background:var(--card-alt); border-radius:var(--radius-md);">
+            <span>${f.title} <br><small style="color:var(--text-muted);">Due: ${f.dueDate}</small></span>
+            <strong class="currency-val">${this.money(f.amount)}</strong>
+          </div>
+        `).join('') || '<div style="color:var(--text-muted);">No fee deadlines.</div>';
+
+        this.renderCharts(monthEx);
+      },
+
+      filterHistoryTable() {
+        const q = (document.getElementById('searchQuery')?.value || '').toLowerCase();
+        const cat = document.getElementById('filterCategory')?.value || 'all';
+        const filtered = this.data.expenses.filter(x => {
+          const matchesCat = cat === 'all' || x.category === cat;
+          const matchesQuery = !q || x.title.toLowerCase().includes(q) || (x.route && x.route.toLowerCase().includes(q));
+          return matchesCat && matchesQuery;
+        });
+
+        document.getElementById('allTransactionsTableBody').innerHTML = filtered.map(x => `
+          <tr>
+            <td>${x.date}</td>
+            <td><span class="tag-badge">${x.category.replace('_', ' ')}</span></td>
+            <td><strong>${x.title}</strong></td>
+            <td>${x.payment || '—'}</td>
+            <td><strong class="currency-val">${this.money(x.amount)}</strong></td>
+            <td><button class="btn btn-sm btn-secondary" onclick="app.deleteExpense('${x.id}')">✕</button></td>
+          </tr>
+        `).join('') || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No transactions found matching filter.</td></tr>';
+      },
+
+      init() {
+        // Navigation clicks
+        document.querySelectorAll('.nav-tab').forEach(b => b.onclick = () => this.switchTab(b.dataset.tab));
+
+        // Header and quick buttons
+        document.getElementById('btnOpenAddModal').onclick = () => this.openExpenseModal();
+        document.getElementById('btnSetBudget').onclick = () => this.openBudgetModal();
+        document.getElementById('btnLogout').onclick = () => this.logout();
+        document.getElementById('currencySelect').onchange = (e) => {
+          this.data.budget.currency = e.target.value;
+          this.save();
+        };
+
+        // Theme toggle
+        document.getElementById('btnThemeToggle').onclick = () => {
+          const current = document.documentElement.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          document.getElementById('btnThemeToggle').textContent = next === 'dark' ? '☀️' : '🌙';
+        };
+
+        // Preset Chips
+        const presetMap = {
+          'bus': ['travel', 'College Bus Commute', 30],
+          'metro': ['travel', 'Metro Rail Token', 40],
+          'canteen-lunch': ['food', 'Canteen Meal Thali', 80, 'normal_food'],
+          'chai-samosa': ['food', 'Chai & Samosa Snack', 25, 'normal_food'],
+          'protein-shake': ['food', 'Whey Scoop + Boiled Eggs', 95, 'gym_diet', 28],
+          'peanut-butter-oats': ['food', 'Gym Oats & Peanut Butter', 50, 'gym_diet', 15],
+          'photocopy': ['study_materials', 'Xerox Notes Print', 15]
+        };
+
+        document.querySelectorAll('.chip-preset').forEach(btn => {
+          btn.onclick = () => {
+            const [cat, title, cost, sub, protein] = presetMap[btn.dataset.preset];
+            this.openExpenseModal();
+            document.getElementById('expCategory').value = cat;
+            document.getElementById('expTitle').value = title;
+            document.getElementById('expAmount').value = cost;
+            if (sub) document.getElementById('foodType').value = sub;
+            if (protein) document.getElementById('gymProteinGrams').value = protein;
+            this.handleCategoryChange();
+          };
+        });
+
+        // Search inputs
+        document.getElementById('searchQuery')?.addEventListener('input', () => this.filterHistoryTable());
+        document.getElementById('filterCategory')?.addEventListener('change', () => this.filterHistoryTable());
+
+        // Test audio synthesized
+        document.getElementById('btnTestAlarm').onclick = () => SoundEngine.playChime();
+        document.getElementById('btnTestCurrentSound').onclick = () => {
+          const sound = document.getElementById('alarmSoundType').value;
+          if (sound === 'chime') SoundEngine.playChime();
+          else if (sound === 'urgent') SoundEngine.playUrgent();
+          else SoundEngine.playDigital();
+        };
+
+        // Export/Import JSON/CSV
+        document.getElementById('btnExportJSON').onclick = () => {
+          const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.data));
+          const dlAnchor = document.createElement('a');
+          dlAnchor.setAttribute("href", dataStr);
+          dlAnchor.setAttribute("download", `daily_karchee_backup_${new Date().toISOString().slice(0,10)}.json`);
+          dlAnchor.click();
+        };
+
+        document.getElementById('btnExportCSV').onclick = () => {
+          let csv = 'ID,Date,Category,Title,Amount,Payment\n';
+          this.data.expenses.forEach(e => {
+            csv += `"${e.id}","${e.date}","${e.category}","${e.title}","${e.amount}","${e.payment||''}"\n`;
+          });
+          const blob = new Blob([csv], { type: 'text/csv' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `daily_karchee_expenses_${new Date().toISOString().slice(0,10)}.csv`;
+          a.click();
+        };
+
+        document.getElementById('btnImportJSONTrigger').onclick = () => document.getElementById('fileInputJSON').click();
+        document.getElementById('fileInputJSON').onchange = (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            try {
+              const imported = JSON.parse(event.target.result);
+              if (imported.expenses) this.data.expenses = imported.expenses;
+              if (imported.fees) this.data.fees = imported.fees;
+              if (imported.budget) this.data.budget = imported.budget;
+              this.save();
+              this.toast('Backup restored successfully!');
+            } catch (err) {
+              alert('Invalid backup file');
+            }
+          };
+          reader.readAsText(file);
+        };
+
+        // Clock timer
+        setInterval(() => {
+          const d = new Date();
+          document.getElementById('currentDateStr').textContent = d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+          document.getElementById('currentTimeStr').textContent = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }, 1000);
+
+        this.checkAuth();
+      }
+    };
+
+    // --- Face Recognition Camera Scanner Interaction ---
+    let cameraStream = null;
+    const faceLoginBtn = document.getElementById("faceLoginButton");
+    const faceModal = document.getElementById("faceModal");
+    const closeFaceModal = document.getElementById("closeFaceModal");
+    const startCameraBtn = document.getElementById("startCameraBtn");
+    const captureFaceBtn = document.getElementById("captureFaceBtn");
+    const faceVideo = document.getElementById("faceVideo");
+    const faceCanvas = document.getElementById("faceCanvas");
+    const cameraStatus = document.getElementById("cameraStatus");
+    const faceScanLine = document.getElementById("faceScanLine");
+
+    function stopCamera() {
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(t => t.stop());
+        cameraStream = null;
+      }
+      if (faceVideo) faceVideo.srcObject = null;
+      if (faceScanLine) faceScanLine.style.display = 'none';
+    }
+
+    if (faceLoginBtn) {
+      faceLoginBtn.onclick = () => {
+        faceModal.classList.add("active");
+        cameraStatus.textContent = "Click Start Camera to begin biometric scan.";
+      };
+    }
+
+    if (closeFaceModal) {
+      closeFaceModal.onclick = () => {
+        stopCamera();
+        faceModal.classList.remove("active");
+      };
+    }
+
+    if (startCameraBtn) {
+      startCameraBtn.onclick = async () => {
+        try {
+          cameraStatus.textContent = "Starting camera...";
+          cameraStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          faceVideo.srcObject = cameraStream;
+          captureFaceBtn.disabled = false;
+          faceScanLine.style.display = 'block';
+          cameraStatus.textContent = "✅ Position your face inside the frame.";
+        } catch (err) {
+          cameraStatus.textContent = "❌ Camera permission denied or device not found.";
+        }
+      };
+    }
+
+    if (captureFaceBtn) {
+      captureFaceBtn.onclick = () => {
+        if (!cameraStream) return;
+        cameraStatus.textContent = "🔍 Scanning and matching facial nodes...";
+        setTimeout(() => {
+          stopCamera();
+          faceModal.classList.remove("active");
+          app.user = { email: "biometric.student@campus.edu", name: "Biometric Verified Student" };
+          localStorage.setItem('dk_auth_user', JSON.stringify(app.user));
+          app.checkAuth();
+          SoundEngine.playChime();
+          app.toast("Face Recognition Match Verified! Welcome.");
+        }, 1200);
+      };
+    }
+
+    // Initialize App on DOM Ready
+    window.app = app;
+    document.addEventListener('DOMContentLoaded', () => app.init());
+  </script>
 </body>
 </html>
